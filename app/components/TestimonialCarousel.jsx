@@ -57,7 +57,7 @@ export default function TestimonialCarousel() {
                             ${isLeft ? 'left-0' : isRight ? 'right-0' : 'translate-x-0'}`}
                         ref={(el) => (cardRefs.current[index] = el)}
                         onClick={() => handleCardClick(index)}
-                        style={{ minWidth: '33.33%', height: '250px' }} // Fixed width and min-height
+                        style={{ minWidth: '33.33%', height: '250px', maxWidth: '90%' }} // Fixed width and min-height
                     >
                         <div className={`${testimonial.bgColor} p-5 rounded shadow-lg flex flex-col justify-center items-center h-full`}>
                             <img src={testimonial.image} alt={`${testimonial.name}'s picture`} className="mb-3 rounded-full" />
