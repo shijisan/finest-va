@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `testimony` MODIFY `image` TEXT NOT NULL,
+    MODIFY `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3);

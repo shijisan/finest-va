@@ -1,34 +1,28 @@
 "use client";
-"use client";
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function TestimonialCarousel() {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [testimonials, setTestimonials] = useState([]); // State for testimonials
     const cardRefs = useRef([]);
 
-    const testimonials = [
-        {
-            id: 1,
-            name: 'John Doe',
-            quote: 'This service was fantastic! Highly recommend to everyone.',
-            image: 'https://via.placeholder.com/100',
-            bgColor: 'bg-blue-500',
-        },
-        {
-            id: 2,
-            name: 'Jane Smith',
-            quote: 'An amazing experience from start to finish.',
-            image: 'https://via.placeholder.com/100',
-            bgColor: 'bg-yellow-500',
-        },
-        {
-            id: 3,
-            name: 'Alice Johnson',
-            quote: 'I couldn’t be happier with the results!',
-            image: 'https://via.placeholder.com/100',
-            bgColor: 'bg-green-500',
-        },
-    ];
+    // Fetch testimonials from the API
+    useEffect(() => {
+        const fetchTestimonials = async () => {
+            try {
+                const response = await fetch('/api/admin/dashboard/testimonial'); // Adjust the path according to your API route
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setTestimonials(data); // Assuming the API returns an array of testimonials
+            } catch (error) {
+                console.error('Failed to fetch testimonials:', error);
+            }
+        };
+
+        fetchTestimonials();
+    }, []); // Empty dependency array means this effect runs once when the component mounts
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -41,6 +35,11 @@ export default function TestimonialCarousel() {
     const handleCardClick = (index) => {
         setCurrentIndex(index);
     };
+
+    // Hide the carousel if there are no testimonials
+    if (testimonials.length === 0) {
+        return null; // Or return a placeholder if desired
+    }
 
     return (
         <div className="relative flex items-center justify-center h-full">

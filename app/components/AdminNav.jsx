@@ -1,12 +1,19 @@
 "use client";
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';  // Make sure to import useRouter correctly
 
 export default function AdminNav() {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter(); // Initialize useRouter
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleLogout = async () => {
+    localStorage.removeItem('token'); // Remove token from local storage
+    router.push('/admin/login'); // Redirect to login page
   };
 
   return (
@@ -23,10 +30,18 @@ export default function AdminNav() {
         </div>
 
         {/* Desktop Menu */}
-        <ul className='items-center hidden space-x-4 text-teal-500 lg:flex'>
+        <ul className='items-center justify-center hidden space-x-4 text-teal-500 lg:flex'>
           <li><a href='/admin/dashboard/admins'>Admins</a></li>
-          <li><a href='/admin/dashboard/testimonies'>Testimonies</a></li>
+          <li><a href='/admin/dashboard/testimonials'>Testimonials</a></li>
           <li><a href='/admin/dashboard/va-profiles'>VA Profiles</a></li>
+          <li>                
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 font-semibold text-white bg-red-500 rounded-lg focus:outline-none"
+            >
+              Logout
+            </button>
+          </li>
         </ul>
 
         {/* Hamburger Menu Button */}
@@ -44,8 +59,16 @@ export default function AdminNav() {
         <div className="fixed top-0 left-0 right-0 z-20 p-4 mt-20 bg-teal-50 lg:hidden">
           <ul className="flex flex-col space-y-2 text-teal-500">
             <li><a href='/admin/dashboard/admins'>Admins</a></li>
-            <li><a href='/admin/dashboard/testimonies'>Testimonies</a></li>
+            <li><a href='/admin/dashboard/testimonials'>testimonials</a></li>
             <li><a href='/admin/dashboard/va-profiles'>VA Profiles</a></li>
+            <li>
+              <button
+                onClick={handleLogout}
+                className="w-full px-4 py-2 font-semibold text-white bg-red-500 rounded-lg focus:outline-none"
+              >
+                Logout
+              </button>
+            </li>
           </ul>
         </div>
       )}

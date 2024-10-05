@@ -43,7 +43,7 @@ export default function Login() {
         <>
         <Nav />
         <div className="container mt-28">
-          <form onSubmit={handleSubmit} className="max-w-md p-6 mx-auto bg-white rounded-lg shadow-lg">
+          <form onSubmit={handleSubmit} className="max-w-md p-6 mx-auto bg-opacity-50 rounded-lg shadow-lg bg-lime-100">
             <h2 className="mb-6 text-2xl font-medium text-center">Admin Login</h2>
             {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
   
@@ -55,7 +55,7 @@ export default function Login() {
                 name="username"
                 value={username} // Controlled input
                 onChange={(e) => setUsername(e.target.value)} // Update username state
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-teal-400 focus:ring-2"
                 required
               />
             </div>
@@ -68,14 +68,14 @@ export default function Login() {
                 name="password"
                 value={password} // Controlled input
                 onChange={(e) => setPassword(e.target.value)} // Update password state
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-teal-400 focus:outline-none focus:ring-2"
                 required
               />
             </div>
   
             <button
               type="submit"
-              className="w-full py-2 font-semibold text-center rounded-lg shadow-lg focus:outline-none"
+              className="w-full py-2 font-semibold text-center rounded-lg shadow-lg focus:outline-none bg-lime-400 hover:bg-lime-300"
             >
               Login
             </button>

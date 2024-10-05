@@ -7,9 +7,16 @@ const dbConfig = {
     database: process.env.DB_NAME,
 };
 
+// Function to create a connection to the database
 const createConnection = async () => {
-    const connection = await mysql.createConnection(dbConfig);
-    return connection;
+    try {
+        const connection = await mysql.createConnection(dbConfig);
+        console.log("Database connected successfully!"); // Optional: log connection success
+        return connection;
+    } catch (error) {
+        console.error("Database connection failed:", error); // Log any connection errors
+        throw error; // Re-throw the error after logging
+    }
 };
 
 export { createConnection };
