@@ -1,7 +1,20 @@
 import Image from "next/image";
 import Nav from "./components/Nav";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt, faCalendarAlt, faComments, faEnvelopeOpen, faSync, faChartBar, faBullseye, faFileSignature, faChartLine, faFileAlt, faCalendarCheck, faTasks } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faPencilAlt, 
+  faCalendarAlt, 
+  faComments, 
+  faEnvelopeOpen, 
+  faSync, 
+  faChartBar, 
+  faBullseye, 
+  faFileSignature, 
+  faChartLine, 
+  faFileAlt, 
+  faCalendarCheck, 
+  faTasks 
+} from '@fortawesome/free-solid-svg-icons';
 import TestimonialCarousel from "./components/TestimonialCarousel";
 import Footer from "./components/Footer";
 
@@ -11,7 +24,9 @@ export default function Home() {
       <Nav/>
 
       <header className="container flex flex-col items-center justify-center">
-        <h2 className="mt-40 text-2xl text-center text-white lg:text-4xl poppins">Welcome to Finest VA<br/>Marketing Agency</h2>
+        <h2 className="mt-40 text-2xl text-center text-white lg:text-4xl poppins">
+          Welcome to Finest VA<br/>Marketing Agency
+        </h2>
       </header>
 
       <section className="container flex items-center justify-center h-screen px-0 pt-3 lg:px-32 lg:pt-32">
@@ -19,7 +34,8 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center h-full px-5 py-5 text-center lg:px-20 lg:h-1/2 aboutText rounded-t-3xl">
             <h3 className="text-2xl font-semibold lg:text-3xl">About Us</h3>
             <br />
-            <p className="font-sans text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <p className="font-sans text-base">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
             <br />
             <a className="secondary-btn" href="#">Learn More</a>
@@ -38,56 +54,71 @@ export default function Home() {
             <br />
             <ul className="space-y-3">
               <li>
-                  <FontAwesomeIcon icon={faPencilAlt} style={{width: '1.5em', color: '#bef264', marginRight: '1em'}} />Content Strategy Development
+                <FontAwesomeIcon icon={faPencilAlt} style={{width: '1.5em', color: '#bef264', marginRight: '1em'}} />
+                Content Strategy Development
               </li>
               <li>
-                  <FontAwesomeIcon icon={faCalendarAlt} style={{width: '1.5em', color: '#bef264', marginRight: '1em'}} />Post Scheduling
+                <FontAwesomeIcon icon={faCalendarAlt} style={{width: '1.5em', color: '#bef264', marginRight: '1em'}} />
+                Post Scheduling
               </li>
               <li>
-                  <FontAwesomeIcon icon={faComments} style={{width: '1.5em', color: '#bef264', marginRight: '1em'}} />Audience Engagement
+                <FontAwesomeIcon icon={faComments} style={{width: '1.5em', color: '#bef264', marginRight: '1em'}} />
+                Audience Engagement
               </li>
             </ul>
-
           </div>
           <div className="items-center justify-center w-full right lg:w-50">
             <div className="items-center justify-center w-1/2 my-16 lg:my-0 h-3/5 bg-gradient bg-opacity-60 rounded-3xl">
-              <img className="w-full transition-transform duration-300 md:w-1/3 lg:w-full hover:scale-110" src="/images/SMM-sect1.webp" alt="SMM" loading="lazy" />
+              <Image 
+                className="w-full transition-transform duration-300 md:w-1/3 lg:w-full hover:scale-110" 
+                src="/images/SMM-sect1.webp" 
+                alt="SMM" 
+                loading="lazy" 
+                width={500} // Specify width
+                height={500} // Specify height
+              />
             </div>
           </div>
         </div>
-
       </section>
 
       <section className="container flex flex-col items-center content-center justify-center fadeElement">
         <div className="flex-col-reverse min-h-screen lg:flex-row-reverse halfSect lg:justify-center justify-evenly">
           <div className="flex-col justify-center w-full px-5 md:px-20 lg:w-50 left">
-          <h3 className="text-3xl font-semibold lg:text-4xl">Email Marketing</h3>
-          <br />
-          <p className="font-sans text-lg">
-            Email marketing involves creating and managing campaigns to engage subscribers, promote products, and build lasting customer relationships. We help by crafting compelling email content, automating campaigns, and analyzing performance to optimize results.
-          </p>
-          <br />
-          <ul className="space-y-3">
-            <li>
-              <FontAwesomeIcon icon={faEnvelopeOpen} style={{width: '1.5em', color: '#0d9488', marginRight: '1em'}} />Email Campaign Creation
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faSync} style={{width: '1.5em', color: '#0d9488', marginRight: '1em'}} />Automated Campaigns
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faChartBar} style={{width: '1.5em', color: '#0d9488', marginRight: '1em'}} />Performance Analytics
-            </li>
-          </ul>
-
-
+            <h3 className="text-3xl font-semibold lg:text-4xl">Email Marketing</h3>
+            <br />
+            <p className="font-sans text-lg">
+              Email marketing involves creating and managing campaigns to engage subscribers, promote products, and build lasting customer relationships. We help by crafting compelling email content, automating campaigns, and analyzing performance to optimize results.
+            </p>
+            <br />
+            <ul className="space-y-3">
+              <li>
+                <FontAwesomeIcon icon={faEnvelopeOpen} style={{width: '1.5em', color: '#0d9488', marginRight: '1em'}} />
+                Email Campaign Creation
+              </li>
+              <li>
+                <FontAwesomeIcon icon={faSync} style={{width: '1.5em', color: '#0d9488', marginRight: '1em'}} />
+                Automated Campaigns
+              </li>
+              <li>
+                <FontAwesomeIcon icon={faChartBar} style={{width: '1.5em', color: '#0d9488', marginRight: '1em'}} />
+                Performance Analytics
+              </li>
+            </ul>
           </div>
           <div className="items-center justify-center w-full lg:w-50 right">
             <div className="items-center justify-center w-1/2 my-16 lg:my-0 h-3/5 bg-gradient-rev bg-opacity-60 rounded-3xl">
-              <img className="w-full transition-transform duration-300 md:w-1/3 lg:w-full hover:scale-110" src="/images/EM-sect2.webp" alt="EM" loading="lazy" />
+              <Image 
+                className="w-full transition-transform duration-300 md:w-1/3 lg:w-full hover:scale-110" 
+                src="/images/EM-sect2.webp" 
+                alt="EM" 
+                loading="lazy" 
+                width={500} // Specify width
+                height={500} // Specify height
+              />
             </div>
           </div>
         </div>
-
       </section>
 
       <section className="container flex flex-col items-center content-center justify-center fadeElement">
@@ -101,64 +132,76 @@ export default function Home() {
             <br />
             <ul className="space-y-3">
               <li>
-                <FontAwesomeIcon icon={faBullseye} style={{width: '1.5em', color: '#16a34a', marginRight: '1em'}} />Targeted Campaigns
+                <FontAwesomeIcon icon={faBullseye} style={{width: '1.5em', color: '#16a34a', marginRight: '1em'}} />
+                Targeted Campaigns
               </li>
               <li>
-                <FontAwesomeIcon icon={faFileSignature} style={{width: '1.5em', color: '#16a34a', marginRight: '1em'}} />Lead Forms & Capture
+                <FontAwesomeIcon icon={faFileSignature} style={{width: '1.5em', color: '#16a34a', marginRight: '1em'}} />
+                Lead Forms & Capture
               </li>
               <li>
-                <FontAwesomeIcon icon={faChartLine} style={{width: '1.5em', color: '#16a34a', marginRight: '1em'}} />Conversion Tracking
+                <FontAwesomeIcon icon={faChartLine} style={{width: '1.5em', color: '#16a34a', marginRight: '1em'}} />
+                Conversion Tracking
               </li>
             </ul>
-
           </div>
           <div className="items-center justify-center w-full right lg:w-50">
             <div className="items-center justify-center w-1/2 my-16 lg:my-0 h-3/5 bg-gradient bg-opacity-60 rounded-3xl">
-              <img className="w-full transition-transform duration-300 md:w-1/3 lg:w-full hover:scale-110" src="/images/LG-sect3.webp" alt="LG" loading="lazy" />
+              <Image 
+                className="w-full transition-transform duration-300 md:w-1/3 lg:w-full hover:scale-110" 
+                src="/images/LG-sect3.webp" 
+                alt="LG" 
+                loading="lazy" 
+                width={500} // Specify width
+                height={500} // Specify height
+              />
             </div>
           </div>
         </div>
-
       </section>
 
       <section className="container flex flex-col items-center content-center justify-center fadeElement">
         <div className="flex-col-reverse min-h-screen lg:flex-row-reverse halfSect lg:justify-center justify-evenly">
           <div className="flex-col justify-center w-full px-5 md:px-20 lg:w-50 left">
-          <h3 className="text-3xl font-semibold lg:text-4xl">Admin Task</h3>
-          <br />
-          <p className="font-sans text-lg">
-            Admin support involves handling a variety of tasks to keep operations running smoothly. We assist with document management, scheduling meetings, and organizing internal processes to ensure seamless business operations.
-          </p>
-          <br />
-          <ul className="space-y-3">
-            <li>
-              <FontAwesomeIcon icon={faFileAlt} style={{width: '1.25em', color: '#4ade80', marginRight: '1em'}} />Document Management
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faCalendarCheck} style={{width: '1.25em', color: '#4ade80', marginRight: '1em'}} />Meeting Scheduling
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faTasks} style={{width: '1.25em', color: '#4ade80', marginRight: '1em'}} />Process Organization
-            </li>
-          </ul>
-
-
+            <h3 className="text-3xl font-semibold lg:text-4xl">Admin Task</h3>
+            <br />
+            <p className="font-sans text-lg">
+              Our virtual assistant services include managing schedules, organizing documents, and performing various administrative tasks to ensure smooth operations and enhance productivity.
+            </p>
+            <br />
+            <ul className="space-y-3">
+              <li>
+                <FontAwesomeIcon icon={faFileAlt} style={{width: '1.5em', color: '#f43f5e', marginRight: '1em'}} />
+                Document Management
+              </li>
+              <li>
+                <FontAwesomeIcon icon={faCalendarCheck} style={{width: '1.5em', color: '#f43f5e', marginRight: '1em'}} />
+                Schedule Coordination
+              </li>
+              <li>
+                <FontAwesomeIcon icon={faTasks} style={{width: '1.5em', color: '#f43f5e', marginRight: '1em'}} />
+                Task Management
+              </li>
+            </ul>
           </div>
           <div className="items-center justify-center w-full lg:w-50 right">
             <div className="items-center justify-center w-1/2 my-16 lg:my-0 h-3/5 bg-gradient-rev bg-opacity-60 rounded-3xl">
-              <img className="w-full transition-transform duration-300 md:w-1/3 lg:w-full hover:scale-110" src="/images/AT-sect4.webp" alt="AT" loading="lazy" />
+              <Image 
+                className="w-full transition-transform duration-300 md:w-1/3 lg:w-full hover:scale-110" 
+                src="/images/AT-sect4.webp" 
+                alt="Admin Task" 
+                loading="lazy" 
+                width={500} // Specify width
+                height={500} // Specify height
+              />
             </div>
           </div>
         </div>
-
       </section>
 
-      <section className="container flex flex-col justify-center overflow-hidden">
-        <TestimonialCarousel/>
-      </section>
+      <TestimonialCarousel />
 
-      <Footer/>
-
+      <Footer />
     </>
   );
 }

@@ -10,7 +10,7 @@ export default function TestimonialCarousel() {
     useEffect(() => {
         const fetchTestimonials = async () => {
             try {
-                const response = await fetch('/api/admin/dashboard/testimonial'); // Adjust the path according to your API route
+                const response = await fetch('/api/testimonials'); // Adjust the path according to your API route
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -41,31 +41,43 @@ export default function TestimonialCarousel() {
         return null; // Or return a placeholder if desired
     }
 
-    return (
-        <div className="relative flex items-center justify-center h-full">
-            {testimonials.map((testimonial, index) => {
-                const isCurrent = index === currentIndex;
-                const isLeft = index === (currentIndex - 1 + testimonials.length) % testimonials.length;
-                const isRight = index === (currentIndex + 1) % testimonials.length;
+    // Determine classes for left, current (center), and right cards
+    const getCardPositionClass = (index) => {
+        const isCurrent = index === currentIndex;
+        const isLeft = index === (currentIndex - 1 + testimonials.length) % testimonials.length;
+        const isRight = index === (currentIndex + 1) % testimonials.length;
 
-                return (
-                    <div
-                        key={testimonial.id}
-                        className={`absolute transition-transform duration-500 transform 
-                            ${isCurrent ? 'scale-110 z-10' : isLeft || isRight ? 'scale-90 z-0' : 'scale-75'}
-                            ${isLeft ? 'left-0' : isRight ? 'right-0' : 'translate-x-0'}`}
-                        ref={(el) => (cardRefs.current[index] = el)}
-                        onClick={() => handleCardClick(index)}
-                        style={{ minWidth: '33.33%', height: '250px', maxWidth: '90%' }} // Fixed width and min-height
-                    >
-                        <div className={`${testimonial.bgColor} p-5 rounded shadow-lg flex flex-col justify-center items-center h-full`}>
-                            <img src={testimonial.image} alt={`${testimonial.name}'s picture`} className="mb-3 rounded-full" />
-                            <p className="text-center text-white">{testimonial.quote}</p>
-                            <p className="mt-2 font-semibold text-white">{testimonial.name}</p>
-                        </div>
+        return isCurrent
+            ? 'scale-110 z-10 transform' // Centered and larger
+            : isLeft
+            ? 'left-0 scale-90 z-0 transform' // Left card
+            : isRight
+            ? 'right-0 scale-90 z-0 transform' // Right card
+            : 'hidden'; // Hide cards that aren't in the immediate left or right
+    };
+
+    return (
+        <section className={`container flex items-center justify-center h-full overflow-hidden ${testimonials.length < 3 ? 'relative' : ''}`}>
+            <h2 className="relative z-10 text-3xl font-semibold mb-96">Testimonies</h2>
+            {testimonials.map((testimonial, index) => (
+                <div
+                    key={testimonial.id}
+                    className={`absolute h-full transition-transform duration-500 ${getCardPositionClass(index)}`}
+                    ref={(el) => (cardRefs.current[index] = el)}
+                    onClick={() => handleCardClick(index)}
+                    style={{ minWidth: '33.33%', height: '250px', maxWidth: '90%' }}
+                >
+                    <div className="flex flex-col items-center justify-center h-full p-5 rounded shadow-lg bg-gradient">
+                        <img
+                            src={`/uploads/${testimonial.image}`} // Prepending the upload directory path
+                            alt={`${testimonial.name}'s picture`}
+                            className="object-cover w-24 h-24 mb-3 rounded-full"
+                        />
+                        <p className="font-sans text-center text-white">{testimonial.text}</p>
+                        <p className="mt-2 font-semibold text-white">{testimonial.name}</p>
                     </div>
-                );
-            })}
-        </div>
+                </div>
+            ))}
+        </section>
     );
 }

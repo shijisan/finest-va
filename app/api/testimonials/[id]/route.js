@@ -1,60 +1,75 @@
-// /api/testimonials/[id]/route.js
+import { createConnection } from "@/dbConfig"; // Adjust the import path if needed
+import fs from 'fs';
+import path from 'path';
 
-import { NextResponse } from 'next/server';
-import createConnection from '@/dbConfig'; // Adjust the path based on your file structure
+const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
 
-// Function to handle GET, PUT, and DELETE requests for a single testimonial
-export async function GET(request, { params }) {
-    const { id } = params;
-
-    try {
-        const connection = await createConnection(); // Ensure you get a connection
-        const [testimonial] = await connection.query('SELECT * FROM Testimony WHERE id = ?', [id]);
-
-        if (testimonial.length === 0) {
-            return NextResponse.json({ error: 'Testimonial not found' }, { status: 404 });
-        }
-        return NextResponse.json(testimonial[0]);
-    } catch (error) {
-        console.error('Error fetching testimonial:', error);
-        return NextResponse.json({ error: 'Failed to fetch testimonial' }, { status: 500 });
+// Function to delete an image from storage
+const deleteImage = (fileName) => {
+    const filePath = path.join(uploadsDir, fileName);
+    if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+        console.log(`Deleted image: ${filePath}`);
+    } else {
+        console.log(`File not found: ${filePath}`);
     }
-}
+};
 
+// Update a testimonial
 export async function PUT(request, { params }) {
-    const { id } = params;
+    const formData = await request.formData();
+    const name = formData.get('name');
+    const text = formData.get('text');
+    const image = formData.get('image');
 
+    const connection = await createConnection();
     try {
-        const connection = await createConnection(); // Ensure you get a connection
-        const { name, image, text } = await request.json();
+        // Get previous image file name from the database
+        const [previous] = await connection.query("SELECT image FROM testimony WHERE id = ?", [params.id]);
         
-        const [result] = await connection.query('UPDATE Testimony SET name = ?, image = ?, text = ? WHERE id = ?', [name, image, text, id]);
-        
-        if (result.affectedRows === 0) {
-            return NextResponse.json({ error: 'Testimonial not found' }, { status: 404 });
+        if (previous.length > 0) {
+            const previousImageName = previous[0].image;
+            // Delete the previous image from storage
+            deleteImage(previousImageName);
         }
-        
-        return NextResponse.json({ id, name, image, text });
+
+        if (image) {
+            await saveImage(image);
+        }
+
+        await connection.query(
+            "UPDATE testimony SET name = ?, image = ?, text = ? WHERE id = ?",
+            [name, image ? image.name : previous[0].image, text, params.id] // Save new or previous image name
+        );
+
+        return new Response("Testimonial updated successfully", { status: 200 });
     } catch (error) {
-        console.error('Error updating testimonial:', error);
-        return NextResponse.json({ error: 'Failed to update testimonial' }, { status: 500 });
+        console.error("Error updating testimonial:", error);
+        return new Response("Failed to update testimonial", { status: 500 });
+    } finally {
+        await connection.end(); // Ensure connection is closed properly
     }
 }
 
+// Delete a testimonial
 export async function DELETE(request, { params }) {
-    const { id } = params;
-
+    const connection = await createConnection();
     try {
-        const connection = await createConnection(); // Ensure you get a connection
-        const [result] = await connection.query('DELETE FROM Testimony WHERE id = ?', [id]);
+        // Get image file name to delete
+        const [previous] = await connection.query("SELECT image FROM testimony WHERE id = ?", [params.id]);
         
-        if (result.affectedRows === 0) {
-            return NextResponse.json({ error: 'Testimonial not found' }, { status: 404 });
+        if (previous.length > 0) {
+            const previousImageName = previous[0].image;
+            // Delete the image from storage
+            deleteImage(previousImageName);
         }
-        
-        return NextResponse.json({ message: 'Testimonial deleted successfully' });
+
+        await connection.query("DELETE FROM testimony WHERE id = ?", [params.id]);
+        return new Response("Testimonial deleted successfully", { status: 204 });
     } catch (error) {
-        console.error('Error deleting testimonial:', error);
-        return NextResponse.json({ error: 'Failed to delete testimonial' }, { status: 500 });
+        console.error("Error deleting testimonial:", error);
+        return new Response("Failed to delete testimonial", { status: 500 });
+    } finally {
+        await connection.end(); // Ensure connection is closed properly
     }
 }

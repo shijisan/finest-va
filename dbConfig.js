@@ -10,11 +10,11 @@ const dbConfig = {
 // Function to create a connection to the database
 const createConnection = async () => {
     try {
-        const connection = await mysql.createConnection(dbConfig);
-        console.log("Database connected successfully!"); // Optional: log connection success
+        const connection = await mysql.createConnection(dbConfig); // This should be fine
+        console.log("Database connected successfully!");
         return connection;
     } catch (error) {
-        console.error("Database connection failed:", error); // Log any connection errors
+        console.error("Database connection failed:", error);
         throw error; // Re-throw the error after logging
     }
 };

@@ -1,15 +1,12 @@
-// /app/admin/dashboard/testimonials/page.jsx
-
 "use client"; // Mark as client component
 
 import { useEffect, useState } from "react";
 
 export default function TestimonialsPage() {
-    const [testimonials, setTestimonials] = useState([]); // Ensure it's initialized as an array
-    const [formData, setFormData] = useState({ name: "", image: "", text: "" });
+    const [testimonials, setTestimonials] = useState([]);
+    const [formData, setFormData] = useState({ name: "", image: null, text: "" });
     const [editId, setEditId] = useState(null);
 
-    // Fetch testimonials on component mount
     useEffect(() => {
         const fetchTestimonials = async () => {
             try {
@@ -18,39 +15,53 @@ export default function TestimonialsPage() {
                     throw new Error("Failed to fetch testimonials");
                 }
                 const data = await response.json();
-                // Ensure data is an array
                 setTestimonials(Array.isArray(data) ? data : []);
             } catch (error) {
                 console.error("Error fetching testimonials:", error);
-                // Optionally, set testimonials to an empty array or show a message
-                setTestimonials([]);
+                setTestimonials([]); // Reset testimonials on error
             }
         };
 
         fetchTestimonials();
     }, []);
 
-    // Handle form input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({ ...prevData, [name]: value }));
+        if (name === "image") {
+            setFormData((prevData) => ({ ...prevData, image: e.target.files[0] }));
+        } else {
+            setFormData((prevData) => ({ ...prevData, [name]: value }));
+        }
     };
 
-    // Handle form submission for creating/updating testimonials
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        const method = editId ? "PUT" : "POST";
+
+        const method = editId ? "PUT" : "POST"; 
         const url = editId ? `/api/testimonials/${editId}` : `/api/testimonials`;
+
+        // Check if there are already 3 testimonials
+        if (!editId && testimonials.length >= 3) {
+            alert("You can only have a maximum of 3 testimonials.");
+            return;
+        }
+
+        const data = new FormData();
+        data.append("name", formData.name);
+        data.append("text", formData.text);
+        if (formData.image) {
+            data.append("image", formData.image);
+        }
 
         try {
             const response = await fetch(url, {
                 method,
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
+                body: data,
             });
 
             if (!response.ok) {
+                const errorText = await response.text();
+                console.error("Error details:", errorText);
                 throw new Error("Failed to submit testimonial");
             }
 
@@ -59,28 +70,24 @@ export default function TestimonialsPage() {
                 if (editId) {
                     return prev.map((t) => (t.id === editId ? updatedTestimonial : t));
                 }
-                return [...prev, updatedTestimonial];
+                return [...prev, updatedTestimonial]; 
             });
             resetForm();
         } catch (error) {
             console.error("Error submitting testimonial:", error);
-            // Optionally, show an error message to the user
         }
     };
 
-    // Reset form fields
     const resetForm = () => {
-        setFormData({ name: "", image: "", text: "" });
+        setFormData({ name: "", image: null, text: "" });
         setEditId(null);
     };
 
-    // Handle edit button click
     const handleEdit = (testimonial) => {
-        setFormData({ name: testimonial.name, image: testimonial.image, text: testimonial.text });
+        setFormData({ name: testimonial.name, image: null, text: testimonial.text });
         setEditId(testimonial.id);
     };
 
-    // Handle delete button click
     const handleDelete = async (id) => {
         try {
             const response = await fetch(`/api/testimonials/${id}`, { method: "DELETE" });
@@ -90,7 +97,6 @@ export default function TestimonialsPage() {
             setTestimonials((prev) => prev.filter((t) => t.id !== id));
         } catch (error) {
             console.error("Error deleting testimonial:", error);
-            // Optionally, show an error message to the user
         }
     };
 
@@ -109,12 +115,10 @@ export default function TestimonialsPage() {
                     className="p-2 mr-2 border"
                 />
                 <input
-                    type="text"
+                    type="file"
                     name="image"
-                    value={formData.image}
                     onChange={handleChange}
-                    placeholder="Image URL"
-                    required
+                    required={!editId}
                     className="p-2 mr-2 border"
                 />
                 <textarea
@@ -136,11 +140,17 @@ export default function TestimonialsPage() {
             </form>
 
             <ul className="space-y-2">
-                {testimonials.map((testimonial) => (
+                {testimonials.slice(0, 3).map((testimonial) => (
                     <li key={testimonial.id} className="flex items-center justify-between p-3 border rounded">
                         <div>
                             <strong>{testimonial.name}</strong>
-                            <img src={testimonial.image} alt={testimonial.name} className="w-16 h-16 rounded-full" />
+                            {testimonial.image && (
+                                <img 
+                                    src={`/uploads/${testimonial.image}`}  // Add /uploads/ prefix here
+                                    alt={testimonial.name} 
+                                    className="w-16 h-16 rounded-full" 
+                                />
+                            )}
                             <p>{testimonial.text}</p>
                         </div>
                         <div>
@@ -154,6 +164,7 @@ export default function TestimonialsPage() {
                     </li>
                 ))}
             </ul>
+
         </div>
     );
 }
