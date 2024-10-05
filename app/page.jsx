@@ -19,15 +19,15 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center h-full px-5 py-5 text-center lg:px-20 lg:h-1/2 aboutText rounded-t-3xl">
             <h3 className="text-2xl font-semibold lg:text-3xl">About Us</h3>
             <br />
-            <p className="text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <p className="font-sans text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
             <br />
-            <a className="primary-btn" href="#">Learn More</a>
+            <a className="secondary-btn" href="#">Learn More</a>
           </div>
         </div>
       </section>
 
-      <section className="container flex flex-col items-center content-center justify-center ">
+      <section className="container flex flex-col items-center content-center justify-center fadeElement">
         <div className="flex-col-reverse min-h-screen lg:flex-row halfSect lg:justify-center justify-evenly">
           <div className="flex-col justify-center w-full px-5 md:px-20 left lg:w-50">
             <h3 className="text-3xl font-semibold lg:text-4xl">Social Media Manager</h3>
@@ -58,7 +58,7 @@ export default function Home() {
 
       </section>
 
-      <section className="container flex flex-col items-center content-center justify-center">
+      <section className="container flex flex-col items-center content-center justify-center fadeElement">
         <div className="flex-col-reverse min-h-screen lg:flex-row-reverse halfSect lg:justify-center justify-evenly">
           <div className="flex-col justify-center w-full px-5 md:px-20 lg:w-50 left">
           <h3 className="text-3xl font-semibold lg:text-4xl">Email Marketing</h3>
@@ -90,7 +90,7 @@ export default function Home() {
 
       </section>
 
-      <section className="container flex flex-col items-center content-center justify-center ">
+      <section className="container flex flex-col items-center content-center justify-center fadeElement">
         <div className="flex-col-reverse min-h-screen lg:flex-row halfSect lg:justify-center justify-evenly">
           <div className="flex-col justify-center w-full px-5 md:px-20 left lg:w-50">
             <h3 className="text-3xl font-semibold lg:text-4xl">Lead Generation</h3>
@@ -121,7 +121,7 @@ export default function Home() {
 
       </section>
 
-      <section className="container flex flex-col items-center content-center justify-center">
+      <section className="container flex flex-col items-center content-center justify-center fadeElement">
         <div className="flex-col-reverse min-h-screen lg:flex-row-reverse halfSect lg:justify-center justify-evenly">
           <div className="flex-col justify-center w-full px-5 md:px-20 lg:w-50 left">
           <h3 className="text-3xl font-semibold lg:text-4xl">Admin Task</h3>
@@ -153,7 +153,7 @@ export default function Home() {
 
       </section>
 
-      <section className="container flex flex-col justify-center">
+      <section className="container flex flex-col justify-center overflow-hidden">
         <TestimonialCarousel/>
       </section>
 

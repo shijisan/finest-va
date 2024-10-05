@@ -12,7 +12,7 @@ export default function Nav() {
 
   return (
     <>
-      <nav className="fixed top-0 z-20 flex justify-between w-full h-20 px-3 md:px-20 bg-teal-50">
+      <nav className="fixed top-0 z-30 flex justify-between w-full h-20 px-3 md:px-20 bg-teal-50">
         <div className="flex items-center logo">
           <div className="mr-3 logoImg">
             <img className='h-16' src="/images/logo.webp" alt="logo" />
@@ -25,12 +25,12 @@ export default function Nav() {
 
         {/* Desktop Menu */}
         <ul className='items-center hidden space-x-4 text-teal-500 lg:flex'>
-          <li><a href='#'>Home</a></li>
-          <li><a href='#'>About</a></li>
-          <li><a href='#'>Offers</a></li>
-          <li><a href='#'>Testimonials</a></li>
-          <li><a href='#'>Rules</a></li>
-          <li><a href='#'>VAs' Profile</a></li>
+          <li><a href='/'>Home</a></li>
+          <li><a href='/about'>About</a></li>
+          <li><a href='/offers'>Offers</a></li>
+          <li><a href='/testimonials'>Testimonials</a></li>
+          <li><a href='/rules'>Rules</a></li>
+          <li><a href='/profiles'>VAs' Profile</a></li>
           <li><a className='primary-btn' href="#">Let's Connect</a></li>
         </ul>
 
@@ -46,14 +46,14 @@ export default function Nav() {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute top-0 left-0 right-0 z-10 p-4 mt-20 bg-teal-50 lg:hidden">
+        <div className="fixed top-0 left-0 right-0 z-20 p-4 mt-20 bg-teal-50 lg:hidden">
           <ul className="flex flex-col space-y-2 text-teal-500">
-            <li><a href='#'>Home</a></li>
-            <li><a href='#'>About</a></li>
-            <li><a href='#'>Offers</a></li>
-            <li><a href='#'>Testimonials</a></li>
-            <li><a href='#'>Rules</a></li>
-            <li><a href='#'>VAs' Profile</a></li>
+            <li><a href='/'>Home</a></li>
+            <li><a href='/about'>About</a></li>
+            <li><a href='/offers'>Offers</a></li>
+            <li><a href='/testimonials'>Testimonials</a></li>
+            <li><a href='/rules'>Rules</a></li>
+            <li><a href='/profiles'>VAs' Profile</a></li>
             <li><a className='primary-btn' href="#">Let's Connect</a></li>
           </ul>
         </div>
