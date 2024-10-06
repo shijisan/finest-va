@@ -26,10 +26,5 @@ export async function DELETE(req, { params }) {
   }
 }
 
-// Disable Next.js body parser
-export const config = {
-  runtime: 'edge', // Set the runtime if needed, depending on your use case
-  api: {
-    bodyParser: false, // Important: Disable Next.js body parser
-  },
-};
+// Use the new runtime export
+export const runtime = 'edge'; // Set the runtime to edge
