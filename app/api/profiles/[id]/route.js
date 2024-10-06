@@ -27,4 +27,4 @@ export async function DELETE(req, { params }) {
 }
 
 // New runtime export for Next.js 14
-export const runtime = 'node'; // Explicitly set the runtime to Node.js
+export const runtime = 'nodejs'; // Explicitly set the runtime to Node.js
