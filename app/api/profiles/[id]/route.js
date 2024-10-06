@@ -26,5 +26,7 @@ export async function DELETE(req, { params }) {
   }
 }
 
-// Use the new runtime export
-export const runtime = 'edge'; // Set the runtime to edge
+// Use Node.js runtime (this is the default for API routes)
+export const config = {
+  runtime: 'node', // or simply omit this line, as Node is the default
+};
