@@ -26,7 +26,5 @@ export async function DELETE(req, { params }) {
   }
 }
 
-// Use Node.js runtime (this is the default for API routes)
-export const config = {
-  runtime: 'node', // or simply omit this line, as Node is the default
-};
+// New runtime export for Next.js 14
+export const runtime = 'node'; // Explicitly set the runtime to Node.js
