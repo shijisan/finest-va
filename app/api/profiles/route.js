@@ -1,23 +1,14 @@
 import { PrismaClient } from '@prisma/client';
+import { v2 as cloudinary } from 'cloudinary';
+
+// Initialize Cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const prisma = new PrismaClient();
-
-// Function to save an image
-const saveImage = async (image) => {
-    // Check if image is valid
-    if (!image) return;
-    
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-    const filePath = path.join(uploadsDir, image.name);
-    const buffer = buffer.from(await image.arrayBuffer());
-    
-    // Ensure uploadsDir exists
-    if (!fs.existsSync(uploadsDir)) {
-        fs.mkdirSync(uploadsDir, { recursive: true });
-    }
-
-    fs.writeFileSync(filePath, buffer);
-};
 
 // Handle GET requests
 export async function GET(req) {
@@ -39,14 +30,21 @@ export async function POST(req) {
     const image = formData.get('image');
 
     try {
+        let imageUrl = null; // Initialize imageUrl
+
+        // Upload image to Cloudinary if it exists
         if (image) {
-            await saveImage(image); // Make sure to handle image saving properly
+            const uploadResult = await cloudinary.uploader.upload(image.stream(), {
+                folder: 'finestVa', // Optional: Specify folder to organize uploads
+            });
+            imageUrl = uploadResult.secure_url; // Get the URL of the uploaded image
         }
 
+        // Create a profile in the database
         const profile = await prisma.profile.create({
             data: {
                 name,
-                image: image?.name || null, // Handle case where image might not be present
+                image: imageUrl || null, // Use Cloudinary URL if available
                 description,
                 niches: niches.join(', '),
             },
@@ -58,6 +56,3 @@ export async function POST(req) {
         return new Response(JSON.stringify({ message: "Failed to save profile" }), { status: 500 });
     }
 }
-
-// Use the new runtime export
-export const runtime = 'nodejs'; // Use Node.js runtime if you're handling file system operations

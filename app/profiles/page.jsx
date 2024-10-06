@@ -39,8 +39,9 @@ export default function Profiles() {
         {profiles.map((profile) => (
           <div key={profile.id} className="flex flex-col items-center w-full px-5 py-10 mb-4 text-white bg-teal-500 lg:items-start lg:flex-row card rounded-3xl">
             <div className="flex flex-col items-center justify-center lg:border-teal-800 min-w-48 min-h-48 card-image lg:me-5 lg:pe-5 lg:border-e">
+              {/* Use Cloudinary URL */}
               <img
-                src={profile.image ? `/uploads/${profile.image}` : "https://placehold.co/200x200/webp"}
+                src={profile.image ? profile.image : "https://placehold.co/200x200/webp"}
                 alt={profile.name}
                 className="object-cover w-full h-full rounded-xl aspect-square"
               />

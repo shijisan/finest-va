@@ -1,19 +1,31 @@
 // app/api/admins/[id]/route.js
 import { NextResponse } from 'next/server';
-import { createConnection } from '@/dbConfig'; // Adjust based on your configuration setup
-import bcrypt from 'bcryptjs/dist/bcrypt';
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
+
+// Initialize Prisma Client
+const prisma = new PrismaClient();
 
 export async function GET(request, { params }) {
     const { id } = params;
-    const connection = await createConnection();
-    const [rows] = await connection.execute('SELECT * FROM finestadmin WHERE id = ?', [id]);
-    await connection.end();
 
-    if (rows.length === 0) {
-        return NextResponse.json({ message: 'Admin not found' }, { status: 404 });
+    try {
+        // Find the admin by ID
+        const admin = await prisma.finestAdmin.findUnique({
+            where: { id: Number(id) }, // Ensure the id is a number
+        });
+
+        if (!admin) {
+            return NextResponse.json({ message: 'Admin not found' }, { status: 404 });
+        }
+
+        return NextResponse.json(admin);
+    } catch (error) {
+        console.error('Error fetching admin:', error);
+        return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+    } finally {
+        await prisma.$disconnect(); // Ensure the Prisma client is disconnected
     }
-
-    return NextResponse.json(rows[0]);
 }
 
 export async function PUT(request, { params }) {
@@ -23,43 +35,49 @@ export async function PUT(request, { params }) {
     // Log the incoming request data for debugging
     console.log('Updating admin:', { id, username, password });
 
-    // Create a database connection
-    const connection = await createConnection();
-
     try {
         // Optionally hash the password if you're storing hashed passwords
         const hashedPassword = await bcrypt.hash(password, 10); // Adjust salt rounds as needed
 
         // Update the admin in the database
-        const [result] = await connection.execute(
-            'UPDATE finestadmin SET username = ?, password = ? WHERE id = ?',
-            [username, hashedPassword, id]
-        );
-
-        if (result.affectedRows === 0) {
-            return NextResponse.json({ message: 'Admin not found' }, { status: 404 });
-        }
+        const admin = await prisma.finestAdmin.update({
+            where: { id: Number(id) }, // Ensure the id is a number
+            data: {
+                username,
+                password: hashedPassword,
+            },
+        });
 
         return NextResponse.json({ message: 'Admin updated successfully' });
     } catch (error) {
         console.error('Error updating admin:', error);
+        if (error.code === 'P2025') {
+            // If admin not found, Prisma throws a P2025 error
+            return NextResponse.json({ message: 'Admin not found' }, { status: 404 });
+        }
         return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
     } finally {
-        await connection.end(); // Ensure the connection is closed
+        await prisma.$disconnect(); // Ensure the Prisma client is disconnected
     }
 }
-
 
 export async function DELETE(request, { params }) {
     const { id } = params;
 
-    const connection = await createConnection();
-    const [result] = await connection.execute('DELETE FROM finestadmin WHERE id = ?', [id]);
-    await connection.end();
+    try {
+        const admin = await prisma.finestAdmin.delete({
+            where: { id: Number(id) }, // Ensure the id is a number
+        });
 
-    if (result.affectedRows === 0) {
-        return NextResponse.json({ message: 'Admin not found' }, { status: 404 });
+        return NextResponse.json({ message: 'Admin deleted' });
+    } catch (error) {
+        console.error('Error deleting admin:', error);
+        if (error.code === 'P2025') {
+            // If admin not found, Prisma throws a P2025 error
+            return NextResponse.json({ message: 'Admin not found' }, { status: 404 });
+        }
+        return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+    } finally {
+        await prisma.$disconnect(); // Ensure the Prisma client is disconnected
     }
-
-    return NextResponse.json({ message: 'Admin deleted' });
 }
