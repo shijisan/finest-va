@@ -1,4 +1,3 @@
-// dbConfig.js
 import { Client } from '@vercel/postgres'; // Import the Postgres client
 
 const dbConfig = {
@@ -15,6 +14,8 @@ const createConnection = async () => {
     } catch (error) {
         console.error("Database connection failed:", error);
         throw error; // Re-throw the error after logging
+    } finally {
+        await client.end(); // Ensure the connection is closed properly
     }
 };
 

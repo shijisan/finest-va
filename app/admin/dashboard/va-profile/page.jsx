@@ -157,18 +157,20 @@ const VAProfileDashboard = () => {
         <h3 className="mb-4 text-2xl">Existing Profiles</h3>
         <div className="flex flex-col">
           {profiles.map((profile) => (
-            <div key={profile.id} className="flex flex-col items-start p-4 mb-2 border">
-              <img src={`/uploads/${profile.image}`} alt={profile.name} className="mb-2" />
-              <h4 className="text-xl">{profile.name}</h4>
-              <p>{profile.description}</p>
-              <p className="font-light text-gray-600">{profile.niches}</p>
-              <div className="flex mt-2 space-x-2">
-                <button
-                  onClick={() => handleDelete(profile.id)}
-                  className="px-2 py-1 text-white bg-red-500 rounded"
-                >
-                  Delete
-                </button>
+            <div key={profile.id} className="flex flex-col items-start p-4 mb-2 bg-teal-400 bg-opacity-50 border rounded-2xl lg:flex-row">
+              <img src={`${profile.image}`} alt={profile.name} className="mb-2 border h-52" />
+              <div className="flex flex-col px-12 justify-evenly profilesText h-52">
+                <h4 className="text-xl">{profile.name}</h4>
+                <p className="font-sans">{profile.description}</p>
+                <p className="p-2 font-light bg-white bg-opacity-50 rounded-md text-lime-500 card w-fit">{profile.niches}</p>
+                <div className="flex mt-2 space-x-2">
+                  <button
+                    onClick={() => handleDelete(profile.id)}
+                    className="px-2 py-1 text-white bg-red-500 rounded"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
           ))}

@@ -1,18 +1,26 @@
 import { createConnection } from "@/dbConfig"; // Adjust the import path if needed
-import fs from 'fs';
-import path from 'path';
+import cloudinary from 'cloudinary';
 
-const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+// Configure Cloudinary
+cloudinary.v2.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
-// Function to delete an image from storage
-const deleteImage = (fileName) => {
-    const filePath = path.join(uploadsDir, fileName);
-    if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-        console.log(`Deleted image: ${filePath}`);
-    } else {
-        console.log(`File not found: ${filePath}`);
-    }
+// Function to upload an image to Cloudinary
+const uploadImageToCloudinary = async (image) => {
+    return new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.v2.uploader.upload_stream((error, result) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(result.secure_url); // Get the secure URL of the uploaded image
+            }
+        });
+
+        image.pipe(uploadStream); // Pipe the image buffer to Cloudinary
+    });
 };
 
 // Update a testimonial
@@ -24,22 +32,19 @@ export async function PUT(request, { params }) {
 
     const connection = await createConnection();
     try {
-        // Get previous image file name from the database
+        // Get previous image URL from the database
         const [previous] = await connection.query("SELECT image FROM testimony WHERE id = ?", [params.id]);
         
-        if (previous.length > 0) {
-            const previousImageName = previous[0].image;
-            // Delete the previous image from storage
-            deleteImage(previousImageName);
-        }
+        let newImageUrl = previous.length > 0 ? previous[0].image : null; // Default to previous image URL
 
+        // If a new image is provided, upload it to Cloudinary
         if (image) {
-            await saveImage(image);
+            newImageUrl = await uploadImageToCloudinary(image);
         }
 
         await connection.query(
             "UPDATE testimony SET name = ?, image = ?, text = ? WHERE id = ?",
-            [name, image ? image.name : previous[0].image, text, params.id] // Save new or previous image name
+            [name, newImageUrl, text, params.id] // Save new or previous image URL
         );
 
         return new Response("Testimonial updated successfully", { status: 200 });
@@ -55,13 +60,14 @@ export async function PUT(request, { params }) {
 export async function DELETE(request, { params }) {
     const connection = await createConnection();
     try {
-        // Get image file name to delete
+        // Get image URL to delete from Cloudinary
         const [previous] = await connection.query("SELECT image FROM testimony WHERE id = ?", [params.id]);
         
         if (previous.length > 0) {
-            const previousImageName = previous[0].image;
-            // Delete the image from storage
-            deleteImage(previousImageName);
+            const previousImageUrl = previous[0].image;
+            // Extract public ID from the URL for deletion
+            const publicId = previousImageUrl.split('/').pop().split('.')[0];
+            await cloudinary.v2.uploader.destroy(publicId); // Delete the image from Cloudinary
         }
 
         await connection.query("DELETE FROM testimony WHERE id = ?", [params.id]);

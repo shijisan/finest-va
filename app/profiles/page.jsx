@@ -1,78 +1,94 @@
 "use client";
 
-import Image from "next/image";
 import Nav from "../components/Nav";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Footer from "../components/Footer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
 export default function Profiles() {
   const [profiles, setProfiles] = useState([]); // State to hold profiles
   const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // State to track errors
 
   // Fetch profiles from the API
   const fetchProfiles = async () => {
     try {
-      const response = await fetch('/api/profiles'); // Adjust this to your API endpoint
+      const response = await fetch("/api/profiles"); // Fetch data from the API
+      if (!response.ok) {
+        throw new Error("Failed to fetch profiles");
+      }
       const data = await response.json();
-      setProfiles(data);
-    } catch (error) {
-      console.error("Error fetching profiles:", error);
+      setProfiles(data); // Update state with fetched profiles
+    } catch (err) {
+      setError(err.message); // Capture error
+      console.error("Error fetching profiles:", err);
     } finally {
-      setLoading(false);
+      setLoading(false); // Set loading to false
     }
   };
 
+  // Fetch profiles on component mount
   useEffect(() => {
-    fetchProfiles(); // Fetch profiles on component mount
+    fetchProfiles();
   }, []);
 
+  // Handle loading state
   if (loading) {
-    return <div>Loading...</div>; // Loading state
+    return <div className="text-lg text-center">Loading...</div>;
+  }
+
+  // Handle error state
+  if (error) {
+    return <div className="text-lg text-center text-red-500">Error: {error}</div>;
   }
 
   return (
     <>
       <Nav />
 
-      <section className="container flex flex-col px-5 mt-28">
-        {profiles.map((profile) => (
-          <div key={profile.id} className="flex flex-col items-center w-full px-5 py-10 mb-4 text-white bg-teal-500 lg:items-start lg:flex-row card rounded-3xl">
-            <div className="flex flex-col items-center justify-center lg:border-teal-800 min-w-48 min-h-48 card-image lg:me-5 lg:pe-5 lg:border-e">
-              {/* Use Cloudinary URL */}
-              <img
-                src={profile.image ? profile.image : "https://placehold.co/200x200/webp"}
-                alt={profile.name}
-                className="object-cover w-full h-full rounded-xl aspect-square"
-              />
-              <hr className="hidden w-full my-3 border-teal-800 lg:block" />
-              <a href="/contact" className="mt-3 secondary-btn w-fit">Inquire</a>
-            </div>
-            <div className="flex flex-col w-full card-texts">
-              <div className="px-5 card-title">
-                <hr className="block my-3 border-teal-800 lg:hidden" />
-                <h4 className="text-3xl">{profile.name}</h4>
+      <section className="container flex flex-col items-center px-5 mt-28">
+        {profiles.length > 0 ? (
+          profiles.map((profile) => (
+            <div
+              key={profile.id}
+              className="flex flex-col items-center w-full p-5 mb-4 bg-teal-500 bg-opacity-50 lg:w-4/6 lg:flex-row lg:items-start rounded-2xl"
+            >
+              {/* Profile Image Section */}
+              <div className="flex-shrink-0 mb-4 lg:mb-0 lg:mr-5">
+                <img
+                  src={profile.image || "https://placehold.co/200x200/webp"} // Use Cloudinary image URL or fallback
+                  alt={profile.name}
+                  className="object-cover w-40 h-40 border border-teal-800 rounded-xl lg:w-52 lg:h-52"
+                />
               </div>
-              <hr className="my-3 border-teal-800" />
-              <div className="px-5 card-desc">
-                <p>{profile.description}</p>
-              </div>
-              <hr className="px-5 my-3 border-teal-800" />
 
-              <div className="px-5 card-flair">
-                <h5>Niches:</h5>
-                <div className="p-2 mx-2 text-black bg-white bg-opacity-50 rounded-md card w-fit">
-                  {/* Displaying each niche */}
-                  {profile.niches.split(', ').map((niche, index) => (
-                    <div key={index} className="text-sm">
-                      <FontAwesomeIcon icon={['fas', 'check-circle']} /> {niche} {/* Add relevant FontAwesome icon */}
-                    </div>
-                  ))}
+              {/* Profile Text Section */}
+              <div className="flex flex-col justify-between w-full h-full">
+                <div className="px-5">
+                  <h4 className="text-2xl font-bold">{profile.name}</h4>
+                  <p className="mt-2 font-sans text-sm lg:text-normal">{profile.description}</p>
+                </div>
+
+                {/* Niches Section */}
+                <div className="px-5 mt-2">
+                  <div className="flex flex-wrap p-2 text-black bg-white bg-opacity-50 rounded-md w-fit ">
+                    {profile.niches.split(", ").map((niche, index) => (
+                      <div key={index} className="flex items-center mr-2 text-sm text-lime-500">
+                        {niche}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex px-5">
+                  <a href="/contact" className="mt-5 text-sm secondary-btn w-fit">Inquire</a>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <div className="text-lg text-center">No profiles available.</div> // Handle case where no profiles are returned
+        )}
       </section>
 
       <Footer />
