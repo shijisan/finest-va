@@ -30,15 +30,19 @@ export default function Home() {
       </header>
 
       <section className="container flex items-center justify-center h-screen px-0 pt-3 lg:px-32 lg:pt-32">
-        <div className="w-full h-full aboutBg rounded-t-3xl">
+        <div className="flex flex-col w-full h-auto aboutBg rounded-t-3xl">
           <div className="flex flex-col items-center justify-center h-full px-5 py-5 text-center lg:px-20 lg:h-1/2 aboutText rounded-t-3xl">
             <h3 className="text-2xl font-semibold lg:text-3xl">About Us</h3>
             <br />
             <p className="font-sans text-base">
-            Finest VA Marketing Agency provides tailored marketing solutions for small businesses and entrepreneurs. Our team specializes in creating effective strategies, managing social media, and enhancing customer engagement. We focus on sectors like e-commerce, consulting, real estate, and health and wellness. Partner with us to elevate your brand and achieve your business goals.
+            Finest VA Marketing Agency is a sister company of The VA Bar, an esteemed academy for virtual assistants. We provide tailored marketing solutions for small businesses and entrepreneurs, specializing in creating effective strategies, managing social media, and enhancing customer engagement. Our focus spans various sectors, including e-commerce, consulting, real estate, and health and wellness. Partner with us to elevate your brand and achieve your business goals with the expertise cultivated from The VA Bar.
             </p>
             <br />
             <a className="secondary-btn" href="#">Learn More</a>
+          </div>
+          <div className="flex items-center h-full px-5 py-5 text-center justify-evenly lg:px-20 lg:h-1/2 aboutImg rounded-t-3xl">
+            <img src="./images/va_bar.png" className="h-52" alt="The VA Bar Logo" />
+            <img src="./images/logo.webp" className="p-3 bg-teal-100 border-4 border-teal-700 rounded-full h-28" alt="Finest VA logo" />
           </div>
         </div>
       </section>

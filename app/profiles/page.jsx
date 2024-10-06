@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Nav from "../components/Nav";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import TestimonialCarousel from "../components/TestimonialCarousel";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
 

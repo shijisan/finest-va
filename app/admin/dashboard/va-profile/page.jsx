@@ -12,7 +12,6 @@ const VAProfileDashboard = () => {
     description: '',
     niches: '', // Change from array to a string for simple text input
   });
-  const [editingProfileId, setEditingProfileId] = useState(null); // Track which profile is being edited
   const { loading, isAuthenticated } = useAuthCheck(); // Get loading and auth status
 
   // Fetch existing profiles from the API
@@ -53,7 +52,7 @@ const VAProfileDashboard = () => {
     }));
   };
 
-  // Handle form submission for adding/updating profiles
+  // Handle form submission for adding profiles
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = new FormData();
@@ -63,39 +62,23 @@ const VAProfileDashboard = () => {
     form.append('niches', formData.niches); // Append niches as a simple string
 
     try {
-      const response = await fetch(`/api/profiles${editingProfileId ? `/${editingProfileId}` : ''}`, {
-        method: editingProfileId ? 'PUT' : 'POST',
+      const response = await fetch(`/api/profiles`, {
+        method: 'POST',
         body: form,
       });
 
       if (!response.ok) {
-        throw new Error(editingProfileId ? 'Failed to update profile' : 'Failed to add profile');
+        throw new Error('Failed to add profile');
       }
 
       const newProfile = await response.json();
-      setProfiles((prevProfiles) =>
-        editingProfileId
-          ? prevProfiles.map((profile) => (profile.id === editingProfileId ? newProfile : profile))
-          : [...prevProfiles, newProfile]
-      );
+      setProfiles((prevProfiles) => [...prevProfiles, newProfile]);
 
-      // Reset form and editing profile state
+      // Reset form state
       setFormData({ image: null, name: '', description: '', niches: '' });
-      setEditingProfileId(null);
     } catch (error) {
-      console.error('Error adding/updating profile:', error);
+      console.error('Error adding profile:', error);
     }
-  };
-
-  // Start editing a profile
-  const handleEdit = (profile) => {
-    setFormData({
-      image: null, // Reset the image field, this could be handled differently depending on your needs
-      name: profile.name,
-      description: profile.description,
-      niches: profile.niches, // Since niches is now a string, no need to handle it as an array
-    });
-    setEditingProfileId(profile.id); // Set the ID of the profile being edited
   };
 
   // Handle delete profile
@@ -130,7 +113,7 @@ const VAProfileDashboard = () => {
               name="image"
               onChange={handleInputChange}
               className="px-2 py-1 border rounded"
-              required={!editingProfileId} // Make required only if adding
+              required
             />
           </div>
           <div className="flex flex-col mb-4">
@@ -167,7 +150,7 @@ const VAProfileDashboard = () => {
             />
           </div>
           <button type="submit" className="px-4 py-2 text-white bg-teal-500 rounded">
-            {editingProfileId ? 'Update Profile' : 'Add Profile'}
+            Add Profile
           </button>
         </form>
 
@@ -180,12 +163,6 @@ const VAProfileDashboard = () => {
               <p>{profile.description}</p>
               <p className="font-light text-gray-600">{profile.niches}</p>
               <div className="flex mt-2 space-x-2">
-                <button
-                  onClick={() => handleEdit(profile)}
-                  className="px-2 py-1 text-white bg-blue-500 rounded"
-                >
-                  Edit
-                </button>
                 <button
                   onClick={() => handleDelete(profile.id)}
                   className="px-2 py-1 text-white bg-red-500 rounded"
