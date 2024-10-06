@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
-import { getXataClient } from '@/path/to/xata'; // Adjust the path to your xata.js
+import { getXataClient } from '@/src/xata.js'; // Adjust the path to your xata.js
 import jwt from 'jsonwebtoken';
 
 export async function POST(request) {
