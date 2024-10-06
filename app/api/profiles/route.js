@@ -9,7 +9,7 @@ const saveImage = async (image) => {
     
     const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
     const filePath = path.join(uploadsDir, image.name);
-    const buffer = Buffer.from(await image.arrayBuffer());
+    const buffer = buffer.from(await image.arrayBuffer());
     
     // Ensure uploadsDir exists
     if (!fs.existsSync(uploadsDir)) {
