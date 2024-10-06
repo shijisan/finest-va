@@ -1,26 +1,23 @@
 import { NextResponse } from 'next/server';
-import mysql from 'mysql2/promise';
 import bcrypt from 'bcrypt';
-import { dbConfig } from '@/dbConfig'; // Adjust based on your configuration setup
+import { PrismaClient } from '@prisma/client'; // Import Prisma Client
 import jwt from 'jsonwebtoken';
+
+// Initialize Prisma Client
+const prisma = new PrismaClient();
 
 export async function POST(request) {
     const { username, password } = await request.json();
 
-    const connection = await mysql.createConnection({
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME,
+    // Query the database using Prisma
+    const admin = await prisma.finestAdmin.findUnique({
+        where: { username: username }, // Find admin by username
     });
 
-    const [rows] = await connection.execute('SELECT * FROM finestadmin WHERE username = ?', [username]);
-
-    if (rows.length === 0) {
+    if (!admin) {
         return NextResponse.json({ message: 'Invalid username or password' }, { status: 401 });
     }
 
-    const admin = rows[0];
     const isPasswordValid = await bcrypt.compare(password, admin.password);
     
     if (!isPasswordValid) {

@@ -9,34 +9,33 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DB_URL")
+  provider = "postgresql" // Ensure this is set to postgresql
+  url      = env("POSTGRES_URL") // Your Postgres connection string
 }
 
 model FinestAdmin {
-    id        Int      @id @default(autoincrement())
-    username  String   @db.VarChar(255) @unique
-    password  String   @db.VarChar(255)
-    createdAt DateTime @default(now())
+    id        Int      @id @default(autoincrement()) // Correct usage for auto-incrementing ID
+    username  String   @unique // Unique usernames
+    password  String   
+    createdAt DateTime @default(now()) // Default to current time
     updatedAt DateTime @default(now()) @updatedAt // Automatically update on record change
 }
 
 // Define the Testimony model
 model Testimony {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(255) // Field for the name of the person giving the testimony
-  image     String   @db.VarChar(255) 
-  text      String   @db.Text          // Field for the testimony text
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt   
+  id        Int      @id @default(autoincrement()) // Correct usage for auto-incrementing ID
+  name      String   // Field for the name of the person giving the testimony
+  image     String   // Field for the image URL
+  text      String   // Field for the testimony text
+  createdAt DateTime @default(now()) // Default to current time
+  updatedAt DateTime @updatedAt // Automatically update on record change
 }
 
 // Define the Profile model
 model Profile {
-  id          Int     @id @default(autoincrement())
+  id          Int     @id @default(autoincrement()) // Correct usage for auto-incrementing ID
   name        String
   description String
   image       String
-  niches      String?  // Make it nullable with "?"
+  niches      String? // Make it nullable with "?"
 }
-

@@ -1,18 +1,17 @@
-import mysql from 'mysql2/promise';
+// dbConfig.js
+import { Client } from '@vercel/postgres'; // Import the Postgres client
 
 const dbConfig = {
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    connectionString: process.env.POSTGRES_URL, // Use the connection string from your environment variables
 };
 
 // Function to create a connection to the database
 const createConnection = async () => {
+    const client = new Client(dbConfig); // Create a new Postgres client instance
     try {
-        const connection = await mysql.createConnection(dbConfig); // This should be fine
+        await client.connect(); // Connect to the database
         console.log("Database connected successfully!");
-        return connection;
+        return client; // Return the client instance for further queries
     } catch (error) {
         console.error("Database connection failed:", error);
         throw error; // Re-throw the error after logging
