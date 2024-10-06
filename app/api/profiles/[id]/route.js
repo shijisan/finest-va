@@ -1,16 +1,16 @@
 import { PrismaClient } from '@prisma/client';
 
-// Initialize Prisma Client
 const prisma = new PrismaClient();
 
 // DELETE API Route to Delete Profile
 export async function DELETE(req, { params }) {
   const { id } = params;
 
+  console.log("Deleting profile with ID:", id); // Log for debugging
+
   try {
-    // Delete the profile in the database
     const deletedProfile = await prisma.profile.delete({
-      where: { id: parseInt(id) },
+      where: { id: parseInt(id, 10) }, // Ensure id is parsed correctly
     });
 
     return new Response(
@@ -26,5 +26,5 @@ export async function DELETE(req, { params }) {
   }
 }
 
-// New runtime export for Next.js 14
-export const runtime = 'nodejs'; // Explicitly set the runtime to Node.js
+// Use the new runtime export
+export const runtime = 'nodejs'; // Set the runtime to Node.js
