@@ -1,14 +1,30 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
+  const [testimonials, setTestimonials] = useState([]); // State to store testimonial data
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  // Fetch testimonial data when the component mounts
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const response = await fetch('/api/testimonials'); // Adjust the API endpoint as needed
+        const data = await response.json();
+        setTestimonials(data); // Store testimonial data in state
+      } catch (error) {
+        console.error("Error fetching testimonials:", error);
+      }
+    };
+
+    fetchTestimonials();
+  }, []);
 
   return (
     <>
@@ -28,7 +44,8 @@ export default function Nav() {
           <li><a href='/'>Home</a></li>
           <li><a href='/about'>About</a></li>
           <li><a href='/offers'>Offers</a></li>
-          <li><a href='/testimonials'>Testimonials</a></li>
+          {/* Conditionally render Testimonials link */}
+          {testimonials.length > 0 && <li><a href='/testimonials'>Testimonials</a></li>}
           <li><a href='/rules'>Rules</a></li>
           <li><a href='/profiles'>VAs' Profile</a></li>
           <li><a className='primary-btn' href="/contact">Let's Connect</a></li>
@@ -51,7 +68,8 @@ export default function Nav() {
             <li><a href='/'>Home</a></li>
             <li><a href='/about'>About</a></li>
             <li><a href='/offers'>Offers</a></li>
-            <li><a href='/testimonials'>Testimonials</a></li>
+            {/* Conditionally render Testimonials link in dropdown as well */}
+            {testimonials.length > 0 && <li><a href='/testimonials'>Testimonials</a></li>}
             <li><a href='/rules'>Rules</a></li>
             <li><a href='/profiles'>VAs' Profile</a></li>
             <li><a className='primary-btn' href="/contact">Let's Connect</a></li>

@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react';
 export default function TestimonialCarousel() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [testimonials, setTestimonials] = useState([]); // State for testimonials
-    const cardRefs = useRef([]);
 
     // Fetch testimonials from the API
     useEffect(() => {
@@ -58,18 +57,17 @@ export default function TestimonialCarousel() {
 
     return (
         <section className={`container flex items-center justify-center h-full overflow-hidden ${testimonials.length < 3 ? 'relative' : ''}`}>
-            <h2 className="relative z-10 text-3xl font-semibold mb-96">Testimonies</h2>
+            <h2 className="relative z-10 mb-8 text-3xl font-semibold">Testimonies</h2>
             {testimonials.map((testimonial, index) => (
                 <div
                     key={testimonial.id}
                     className={`absolute h-full transition-transform duration-500 lg:w-auto w-full ${getCardPositionClass(index)}`}
-                    ref={(el) => (cardRefs.current[index] = el)}
                     onClick={() => handleCardClick(index)}
                     style={{ minWidth: '33.33%', height: '250px', maxWidth: '90%' }}
                 >
                     <div className="flex flex-col items-center justify-center h-full p-5 rounded shadow-lg bg-gradient">
                         <img
-                            src={`/uploads/${testimonial.image}`} // Prepending the upload directory path
+                            src={testimonial.image} // Using the provided image URL directly
                             alt={`${testimonial.name}'s picture`}
                             className="object-cover w-24 h-24 mb-3 rounded-full"
                         />

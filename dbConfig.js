@@ -1,4 +1,4 @@
-import { Client } from '@vercel/postgres'; // Import the Postgres client
+import { createClient } from '@vercel/postgres'; // Correct import for the client
 
 const dbConfig = {
     connectionString: process.env.POSTGRES_URL, // Use the connection string from your environment variables
@@ -6,7 +6,7 @@ const dbConfig = {
 
 // Function to create a connection to the database
 const createConnection = async () => {
-    const client = new Client(dbConfig); // Create a new Postgres client instance
+    const client = createClient(); // Create a new Postgres client instance
     try {
         await client.connect(); // Connect to the database
         console.log("Database connected successfully!");
@@ -14,8 +14,6 @@ const createConnection = async () => {
     } catch (error) {
         console.error("Database connection failed:", error);
         throw error; // Re-throw the error after logging
-    } finally {
-        await client.end(); // Ensure the connection is closed properly
     }
 };
 

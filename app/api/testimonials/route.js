@@ -1,81 +1,101 @@
-import { createConnection } from "@/dbConfig"; // Adjust the import path if needed
-import cloudinary from 'cloudinary';
+import { createConnection } from "@/dbConfig"; // Adjust the path if necessary
+import { v2 as cloudinary } from 'cloudinary'; // Import Cloudinary V2
+import { Readable } from 'stream'; // Import Readable to create a stream
 
 // Configure Cloudinary
-cloudinary.v2.config({
+cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Upload image to Cloudinary
-const uploadImageToCloudinary = async (image) => {
-    const buffer = Buffer.from(await image.arrayBuffer());
-
-    return new Promise((resolve, reject) => {
-        const uploadStream = cloudinary.v2.uploader.upload_stream(
-            {
-                folder: 'testimonials', // Optional folder in Cloudinary
-            },
-            (error, result) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(result.secure_url); // Return the URL of the uploaded image
-                }
-            }
-        );
-
-        // Write the buffer to Cloudinary's upload stream
-        uploadStream.end(buffer);
-    });
-};
-
-// Fetch testimony from PostgreSQL
-export async function GET() {
+// Fetch all testimonials
+export async function GET(req) {
     const client = await createConnection();
+
     try {
-        const result = await client.query("SELECT * FROM testimony");
-        const rows = result.rows;
-        return new Response(JSON.stringify(rows), { status: 200 });
+        const result = await client.query('SELECT * FROM "Testimony" ORDER BY "createdAt" DESC'); // Fetch all testimonials
+        // Return the testimonials
+        return new Response(JSON.stringify(result.rows), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+        });
     } catch (error) {
-        console.error("Error fetching testimony:", error);
-        return new Response("Failed to fetch testimony", { status: 500 });
+        console.error("Error fetching testimonials:", error);
+        return new Response(JSON.stringify({ error: error.message }), { status: 500, headers: { 'Content-Type': 'application/json' } });
     } finally {
-        client.release(); // Ensure connection is closed properly
+        await client.end(); // Ensure the database connection is closed
     }
 }
 
-// Create a new testimonial
-export async function POST(request) {
-    const formData = await request.formData();
-    const name = formData.get('name');
-    const text = formData.get('text');
-    const image = formData.get('image'); // Assuming this is a file
 
+// Function to upload image to Cloudinary
+const uploadImageToCloudinary = async (image) => {
+    return new Promise((resolve, reject) => {
+        // Check if image is a valid File object
+        if (!image) {
+            reject(new Error("No image provided."));
+            return;
+        }
+
+        // Create a readable stream from the File object
+        const stream = Readable.from(image.stream());
+
+        // Upload the image to Cloudinary
+        const uploadStream = cloudinary.uploader.upload_stream((error, result) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(result.secure_url); // Get the secure URL of the uploaded image
+            }
+        });
+
+        stream.pipe(uploadStream); // Pipe the stream to Cloudinary
+    });
+};
+
+// Create a new testimonial
+export async function POST(req) {
     const client = await createConnection();
-    let imageUrl = null;
+    const body = await req.formData(); // Use formData to handle incoming data
 
     try {
-        // Upload image to Cloudinary if it exists
+        const name = body.get('name'); // Extract name from form data
+        const text = body.get('text'); // Extract text from form data
+        const image = body.get('image'); // Extract image from form data
+
+        // Log the received values
+        console.log("Received data:", { name, text, image });
+
+        // Check if image is provided
+        if (!image) {
+            throw new Error("Image is required.");
+        }
+
+        // Upload image if provided
+        let imageUrl = null;
         if (image) {
             imageUrl = await uploadImageToCloudinary(image);
         }
 
-        // Insert the testimonial into the PostgreSQL database
         const result = await client.query(
-            "INSERT INTO testimony (name, image, text) VALUES ($1, $2, $3) RETURNING *",
-            [name, imageUrl, text]
+            'INSERT INTO "Testimony" (name, text, image, "createdAt", "updatedAt") VALUES ($1, $2, $3, $4, $5) RETURNING *',
+            [name, text, imageUrl, new Date(), new Date()]
         );
+        
+        
 
-        // Get the inserted row
-        const insertedTestimonial = result.rows[0];
 
-        return new Response(JSON.stringify(insertedTestimonial), { status: 201 });
+        // Return the newly created testimonial
+        return new Response(JSON.stringify(result.rows[0]), {
+            status: 201,
+            headers: { 'Content-Type': 'application/json' },
+        });
     } catch (error) {
-        console.error("Error saving testimonial:", error);
-        return new Response("Failed to save testimonial", { status: 500 });
+        console.error("Error inserting testimonial:", error);
+        // Provide a more detailed error message
+        return new Response(JSON.stringify({ error: error.message }), { status: 500, headers: { 'Content-Type': 'application/json' } });
     } finally {
-        client.release(); // Ensure connection is closed properly
+        await client.end(); // Ensure the database connection is closed
     }
 }

@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { useAuthCheck } from "@/app/utils/auth"; // Import the auth check function
 import AdminNav from "@/app/components/AdminNav";
 
-
 export default function TestimonialsPage() {
     const [testimonials, setTestimonials] = useState([]);
     const [formData, setFormData] = useState({ name: "", image: null, text: "" });
     const [editId, setEditId] = useState(null);
     const { loading, isAuthenticated } = useAuthCheck(); // Get loading and auth status
+    const [errorMessage, setErrorMessage] = useState(''); // State for error messages
 
     useEffect(() => {
         const fetchTestimonials = async () => {
@@ -50,6 +50,7 @@ export default function TestimonialsPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrorMessage(''); // Reset error message on submit
 
         const method = editId ? "PUT" : "POST"; 
         const url = editId ? `/api/testimonials/${editId}` : `/api/testimonials`;
@@ -89,12 +90,14 @@ export default function TestimonialsPage() {
             resetForm();
         } catch (error) {
             console.error("Error submitting testimonial:", error);
+            setErrorMessage(error.message); // Set error message
         }
     };
 
     const resetForm = () => {
         setFormData({ name: "", image: null, text: "" });
         setEditId(null);
+        setErrorMessage(''); // Reset error message
     };
 
     const handleEdit = (testimonial) => {
@@ -109,83 +112,86 @@ export default function TestimonialsPage() {
                 throw new Error("Failed to delete testimonial");
             }
             setTestimonials((prev) => prev.filter((t) => t.id !== id));
+            resetForm(); // Reset form after delete
         } catch (error) {
             console.error("Error deleting testimonial:", error);
+            setErrorMessage(error.message); // Set error message
         }
     };
+    
 
     return (
         <>
-        
-        
-        <AdminNav />
+            <AdminNav />
+            <div className="container p-5 mx-auto mt-28">
+                <h1 className="mb-5 text-3xl font-bold">Testimonials</h1>
 
-        <div className="container p-5 mx-auto mt-28">
-            <h1 className="mb-5 text-3xl font-bold">Testimonials</h1>
+                {/* Display error message if any */}
+                {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
-            <form onSubmit={handleSubmit} className="flex w-full mb-5">
-                <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Name"
-                    required
-                    className="w-full p-2 mr-2 border lg:w-1/4"
-                />
-                <input
-                    type="file"
-                    name="image"
-                    onChange={handleChange}
-                    required={!editId}
-                    className="w-full p-2 mr-2 border lg:w-1/4"
-                />
-                <textarea
-                    name="text"
-                    value={formData.text}
-                    onChange={handleChange}
-                    placeholder="Testimonial Text"
-                    required
-                    className="w-full p-2 mr-2 border lg:w-1/4"
-                ></textarea>
-                <button type="submit" className="px-4 py-2 text-white bg-blue-500">
-                    {editId ? "Update Testimonial" : "Add Testimonial"}
-                </button>
-                {editId && (
-                    <button type="button" onClick={resetForm} className="px-4 py-2 ml-2 text-white bg-gray-500">
-                        Cancel
+                <form onSubmit={handleSubmit} className="flex w-full mb-5">
+                    <input
+                        type="file"
+                        name="image"
+                        onChange={handleChange}
+                        required={!editId || (editId && !formData.image)} // Conditional required
+                        className="w-full p-2 mr-2 border lg:w-1/4"
+                    />
+                    <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="Name"
+                        required
+                        className="w-full p-2 mr-2 border lg:w-1/4"
+                    />
+                    <textarea
+                        name="text"
+                        value={formData.text}
+                        onChange={handleChange}
+                        placeholder="Testimonial Text"
+                        required
+                        className="w-full p-2 mr-2 border lg:w-1/4"
+                    ></textarea>
+                    <button type="submit" className="px-4 py-2 text-white bg-blue-500">
+                        {editId ? "Update Testimonial" : "Add Testimonial"}
                     </button>
-                )}
-            </form>
+                    {editId && (
+                        <button type="button" onClick={resetForm} className="px-4 py-2 ml-2 text-white bg-gray-500">
+                            Cancel
+                        </button>
+                    )}
+                </form>
 
-            <ul className="space-y-2">
-                {testimonials.slice(0, 3).map((testimonial) => (
-                    <li key={testimonial.id} className="flex items-center justify-between p-3 border rounded">
-                        <div>
-                            <strong>{testimonial.name}</strong>
-                            {testimonial.image && (
-                                <img 
-                                    src={`/uploads/${testimonial.image}`}  // Add /uploads/ prefix here
-                                    alt={testimonial.name} 
-                                    className="w-16 h-16 rounded-full" 
-                                />
-                            )}
-                            <p>{testimonial.text}</p>
-                        </div>
-                        <div>
-                            <button onClick={() => handleEdit(testimonial)} className="px-2 py-1 mr-2 text-white bg-yellow-500">
-                                Edit
-                            </button>
-                            <button onClick={() => handleDelete(testimonial.id)} className="px-2 py-1 text-white bg-red-500">
-                                Delete
-                            </button>
-                        </div>
-                    </li>
-                ))}
-            </ul>
-
-        </div>
-
+                <ul className="space-y-2">
+                    {testimonials.slice(0, 3).map((testimonial) => (
+                        <li key={testimonial.id} className="flex items-center justify-between p-3 border rounded">
+                            <div className="flex">
+                                {testimonial.image && (
+                                    <img 
+                                        src={testimonial.image}  // Ensure this path is correct
+                                        alt={testimonial.name} 
+                                        className="w-20 h-20 mr-4 rounded-full" 
+                                    />
+                                )}
+                                <div className="flex flex-col w-full testimonialTexts justify-evenly">
+                                    <strong>{testimonial.name}</strong>
+                                    <p>{testimonial.text}</p>
+                                </div>
+                            </div>
+                            <div>
+                                <button onClick={() => handleEdit(testimonial)} className="px-2 py-1 mr-2 text-white bg-yellow-500">
+                                    Edit
+                                </button>
+                                <button onClick={() => handleDelete(testimonial.id)} className="px-2 py-1 text-white bg-red-500">
+                                    Delete
+                                </button>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </>
     );
 }
