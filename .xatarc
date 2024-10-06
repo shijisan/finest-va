@@ -1,7 +1,0 @@
-{
-  "databaseURL": "https://shiji-s-workspace-ednoef.ap-southeast-2.xata.sh/db/finestva",
-  "codegen": {
-    "output": "src/xata.js",
-    "moduleType": "esm"
-  }
-}
