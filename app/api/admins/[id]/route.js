@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs/dist/bcrypt';
 export async function GET(request, { params }) {
     const { id } = params;
     const connection = await createConnection();
-    const [rows] = await connection.execute('SELECT * FROM finest_admin WHERE id = ?', [id]);
+    const [rows] = await connection.execute('SELECT * FROM finestadmin WHERE id = ?', [id]);
     await connection.end();
 
     if (rows.length === 0) {
@@ -32,7 +32,7 @@ export async function PUT(request, { params }) {
 
         // Update the admin in the database
         const [result] = await connection.execute(
-            'UPDATE finest_admin SET username = ?, password = ? WHERE id = ?',
+            'UPDATE finestadmin SET username = ?, password = ? WHERE id = ?',
             [username, hashedPassword, id]
         );
 
@@ -54,7 +54,7 @@ export async function DELETE(request, { params }) {
     const { id } = params;
 
     const connection = await createConnection();
-    const [result] = await connection.execute('DELETE FROM finest_admin WHERE id = ?', [id]);
+    const [result] = await connection.execute('DELETE FROM finestadmin WHERE id = ?', [id]);
     await connection.end();
 
     if (result.affectedRows === 0) {

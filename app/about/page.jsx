@@ -109,7 +109,7 @@ export default function About(){
                                 </li>
                                 <br />
                                 <li className="flex items-center justify-center">
-                                    <a href="#" className="primary-btn">Learn More</a>
+                                    <a href="/contact" className="primary-btn">Learn More</a>
                                 </li>
                             </ul>
 

@@ -31,7 +31,7 @@ export default function Nav() {
           <li><a href='/testimonials'>Testimonials</a></li>
           <li><a href='/rules'>Rules</a></li>
           <li><a href='/profiles'>VAs' Profile</a></li>
-          <li><a className='primary-btn' href="#">Let's Connect</a></li>
+          <li><a className='primary-btn' href="/contact">Let's Connect</a></li>
         </ul>
 
         {/* Hamburger Menu Button */}
@@ -54,7 +54,7 @@ export default function Nav() {
             <li><a href='/testimonials'>Testimonials</a></li>
             <li><a href='/rules'>Rules</a></li>
             <li><a href='/profiles'>VAs' Profile</a></li>
-            <li><a className='primary-btn' href="#">Let's Connect</a></li>
+            <li><a className='primary-btn' href="/contact">Let's Connect</a></li>
           </ul>
         </div>
       )}

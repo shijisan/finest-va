@@ -1,5 +1,21 @@
 // app/utils/auth.js
-export const isAuthenticated = () => {
-    const token = localStorage.getItem('token');
-    return token ? true : false;
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+export const useAuthCheck = () => {
+    const [loading, setLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const router = useRouter();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setIsAuthenticated(true);
+        } else {
+            router.push('/admin/login');
+        }
+        setLoading(false); // Set loading to false once the check is done
+    }, [router]);
+
+    return { loading, isAuthenticated };
 };

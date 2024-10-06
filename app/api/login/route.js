@@ -14,7 +14,7 @@ export async function POST(request) {
         database: process.env.DB_NAME,
     });
 
-    const [rows] = await connection.execute('SELECT * FROM finest_admin WHERE username = ?', [username]);
+    const [rows] = await connection.execute('SELECT * FROM finestadmin WHERE username = ?', [username]);
 
     if (rows.length === 0) {
         return NextResponse.json({ message: 'Invalid username or password' }, { status: 401 });

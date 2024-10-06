@@ -10,9 +10,9 @@ export default function Rules() {
       <Nav/>
 
 
-      <section className="container flex flex-col items-center justify-center h-screen text-white mt-15 rules">
-        <div className="w-4/5 bg-teal-400 rounded-3xl h-96 bg-opacity-60">
-            <div className="px-16 py-5">
+      <section className="container flex flex-col items-center justify-center h-screen text-white rules">
+        <div className="mt-10 bg-teal-400 lg:w-4/5 rounded-3xl min-h-96 bg-opacity-60 lg:mt-0">
+            <div className="px-5 py-5 lg:px-16">
                 <h3 className="text-3xl font-medium text-lime-300">General Rules:</h3>
                 <br />
                 <ul>

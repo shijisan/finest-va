@@ -3,25 +3,22 @@
 import AdminNav from "@/app/components/AdminNav";
 import { useRouter } from 'next/navigation'; 
 import { useState, useEffect } from 'react'; 
-import { isAuthenticated } from '@/app/utils/auth'; 
+import { useAuthCheck } from "@/app/utils/auth"; // Import the auth check function
+
 
 export default function Dashboard() {
     const router = useRouter(); 
     const [error, setError] = useState(''); 
-    const [loading, setLoading] = useState(true); 
+    const { loading, isAuthenticated } = useAuthCheck(); // Get loading and auth status
 
-    useEffect(() => {
-        if (!isAuthenticated()) {
-            router.push('/admin/login'); 
-        } else {
-            setLoading(false); 
-        }
-    }, [router]);
-
-
-
+    // While loading, return a loading message
     if (loading) {
-        return <p>Loading...</p>; 
+        return <p>Loading...</p>;
+    }
+
+    // If not authenticated, you should already have redirected
+    if (!isAuthenticated) {
+        return null; // Or return a message, but the router should redirect
     }
 
     return (

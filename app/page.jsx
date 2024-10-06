@@ -35,7 +35,7 @@ export default function Home() {
             <h3 className="text-2xl font-semibold lg:text-3xl">About Us</h3>
             <br />
             <p className="font-sans text-base">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            Finest VA Marketing Agency provides tailored marketing solutions for small businesses and entrepreneurs. Our team specializes in creating effective strategies, managing social media, and enhancing customer engagement. We focus on sectors like e-commerce, consulting, real estate, and health and wellness. Partner with us to elevate your brand and achieve your business goals.
             </p>
             <br />
             <a className="secondary-btn" href="#">Learn More</a>
@@ -171,15 +171,15 @@ export default function Home() {
             <br />
             <ul className="space-y-3">
               <li>
-                <FontAwesomeIcon icon={faFileAlt} style={{width: '1.5em', color: '#f43f5e', marginRight: '1em'}} />
+                <FontAwesomeIcon icon={faFileAlt} style={{width: '1.5em', color: '#0d9488', marginRight: '1em'}} />
                 Document Management
               </li>
               <li>
-                <FontAwesomeIcon icon={faCalendarCheck} style={{width: '1.5em', color: '#f43f5e', marginRight: '1em'}} />
+                <FontAwesomeIcon icon={faCalendarCheck} style={{width: '1.5em', color: '#0d9488', marginRight: '1em'}} />
                 Schedule Coordination
               </li>
               <li>
-                <FontAwesomeIcon icon={faTasks} style={{width: '1.5em', color: '#f43f5e', marginRight: '1em'}} />
+                <FontAwesomeIcon icon={faTasks} style={{width: '1.5em', color: '#0d9488', marginRight: '1em'}} />
                 Task Management
               </li>
             </ul>

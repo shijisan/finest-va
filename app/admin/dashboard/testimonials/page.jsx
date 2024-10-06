@@ -1,11 +1,15 @@
 "use client"; // Mark as client component
 
 import { useEffect, useState } from "react";
+import { useAuthCheck } from "@/app/utils/auth"; // Import the auth check function
+import AdminNav from "@/app/components/AdminNav";
+
 
 export default function TestimonialsPage() {
     const [testimonials, setTestimonials] = useState([]);
     const [formData, setFormData] = useState({ name: "", image: null, text: "" });
     const [editId, setEditId] = useState(null);
+    const { loading, isAuthenticated } = useAuthCheck(); // Get loading and auth status
 
     useEffect(() => {
         const fetchTestimonials = async () => {
@@ -24,6 +28,16 @@ export default function TestimonialsPage() {
 
         fetchTestimonials();
     }, []);
+
+    // While loading, return a loading message
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    // If not authenticated, you should already have redirected
+    if (!isAuthenticated) {
+        return null; // Or return a message, but the router should redirect
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -101,10 +115,15 @@ export default function TestimonialsPage() {
     };
 
     return (
-        <div className="container p-5 mx-auto">
+        <>
+        
+        
+        <AdminNav />
+
+        <div className="container p-5 mx-auto mt-28">
             <h1 className="mb-5 text-3xl font-bold">Testimonials</h1>
 
-            <form onSubmit={handleSubmit} className="mb-5">
+            <form onSubmit={handleSubmit} className="flex w-full mb-5">
                 <input
                     type="text"
                     name="name"
@@ -112,14 +131,14 @@ export default function TestimonialsPage() {
                     onChange={handleChange}
                     placeholder="Name"
                     required
-                    className="p-2 mr-2 border"
+                    className="w-full p-2 mr-2 border lg:w-1/4"
                 />
                 <input
                     type="file"
                     name="image"
                     onChange={handleChange}
                     required={!editId}
-                    className="p-2 mr-2 border"
+                    className="w-full p-2 mr-2 border lg:w-1/4"
                 />
                 <textarea
                     name="text"
@@ -127,7 +146,7 @@ export default function TestimonialsPage() {
                     onChange={handleChange}
                     placeholder="Testimonial Text"
                     required
-                    className="p-2 mr-2 border"
+                    className="w-full p-2 mr-2 border lg:w-1/4"
                 ></textarea>
                 <button type="submit" className="px-4 py-2 text-white bg-blue-500">
                     {editId ? "Update Testimonial" : "Add Testimonial"}
@@ -166,5 +185,7 @@ export default function TestimonialsPage() {
             </ul>
 
         </div>
+
+        </>
     );
 }

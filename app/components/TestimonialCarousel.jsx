@@ -62,7 +62,7 @@ export default function TestimonialCarousel() {
             {testimonials.map((testimonial, index) => (
                 <div
                     key={testimonial.id}
-                    className={`absolute h-full transition-transform duration-500 ${getCardPositionClass(index)}`}
+                    className={`absolute h-full transition-transform duration-500 lg:w-auto w-full ${getCardPositionClass(index)}`}
                     ref={(el) => (cardRefs.current[index] = el)}
                     onClick={() => handleCardClick(index)}
                     style={{ minWidth: '33.33%', height: '250px', maxWidth: '90%' }}

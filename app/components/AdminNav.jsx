@@ -33,7 +33,7 @@ export default function AdminNav() {
         <ul className='items-center justify-center hidden space-x-4 text-teal-500 lg:flex'>
           <li><a href='/admin/dashboard/admins'>Admins</a></li>
           <li><a href='/admin/dashboard/testimonials'>Testimonials</a></li>
-          <li><a href='/admin/dashboard/va-profiles'>VA Profiles</a></li>
+          <li><a href='/admin/dashboard/va-profile'>VA Profiles</a></li>
           <li>                
             <button
               onClick={handleLogout}
@@ -60,7 +60,7 @@ export default function AdminNav() {
           <ul className="flex flex-col space-y-2 text-teal-500">
             <li><a href='/admin/dashboard/admins'>Admins</a></li>
             <li><a href='/admin/dashboard/testimonials'>testimonials</a></li>
-            <li><a href='/admin/dashboard/va-profiles'>VA Profiles</a></li>
+            <li><a href='/admin/dashboard/va-profile'>VA Profiles</a></li>
             <li>
               <button
                 onClick={handleLogout}

@@ -13,13 +13,12 @@ datasource db {
   url      = env("DB_URL")
 }
 
-// Define the FinestAdmin model
 model FinestAdmin {
-  id        Int      @id @default(autoincrement())
-  username  String   @db.VarChar(255) @unique
-  password  String   @db.VarChar(255)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    id        Int      @id @default(autoincrement())
+    username  String   @db.VarChar(255) @unique
+    password  String   @db.VarChar(255)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt // Automatically update on record change
 }
 
 // Define the Testimony model
@@ -29,6 +28,15 @@ model Testimony {
   image     String   @db.VarChar(255) 
   text      String   @db.Text          // Field for the testimony text
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())   
+  updatedAt DateTime @updatedAt   
+}
+
+// Define the Profile model
+model Profile {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String
+  image       String
+  niches      String?  // Make it nullable with "?"
 }
 
