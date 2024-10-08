@@ -64,15 +64,15 @@ export default function Nav() {
       {/* Dropdown Menu */}
       {isOpen && (
         <div className="fixed top-0 left-0 right-0 z-20 p-4 mt-20 bg-teal-50 lg:hidden">
-          <ul className="flex flex-col space-y-2 text-teal-500">
-            <li><a href='/'>Home</a></li>
-            <li><a href='/about'>About</a></li>
-            <li><a href='/offers'>Offers</a></li>
+          <ul className="flex flex-col text-teal-500">
+            <li className="py-2"><a href='/'>Home</a></li>
+            <li className="py-2"><a href='/about'>About</a></li>
+            <li className="py-2"><a href='/offers'>Offers</a></li>
             {/* Conditionally render Testimonials link in dropdown as well */}
-            {testimonials.length > 0 && <li><a href='/testimonials'>Testimonials</a></li>}
-            <li><a href='/rules'>Rules</a></li>
-            <li><a href='/profiles'>VAs' Profile</a></li>
-            <li><a className='primary-btn' href="/contact">Let's Connect</a></li>
+            {testimonials.length > 0 && <li className="py-2"><a href='/testimonials'>Testimonials</a></li>}
+            <li className="py-2"><a href='/rules'>Rules</a></li>
+            <li className="py-2"><a href='/profiles'>VAs' Profile</a></li>
+            <li className="py-2"><a className='primary-btn' href="/contact">Let's Connect</a></li>
           </ul>
         </div>
       )}

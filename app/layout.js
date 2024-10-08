@@ -1,4 +1,4 @@
-import { Poppins, Gruppo } from "@next/font/google";
+import { Poppins, Gruppo, Inter } from "@next/font/google";
 import "./globals.css";
 
 // Import Poppins font
@@ -6,6 +6,13 @@ const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
   variable: "--font-poppins",
+});
+
+// Import Inter font
+const inter = Inter({
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+  variable: "--font-inter",
 });
 
 // Import Gruppo font
@@ -27,7 +34,7 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body
-        className={`${poppins.variable} ${gruppo.variable} antialiased`}
+        className={`${poppins.variable} ${gruppo.variable} ${inter.variable} antialiased`}
       >
         {children}
       </body>

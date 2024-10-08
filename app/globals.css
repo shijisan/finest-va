@@ -81,6 +81,10 @@ header{
   font-family: var(--font-gruppo);  
 }
 
+.inter{
+  font-family: var(--font-inter);  
+}
+
 .container{
   min-height: 100vh!important;
 }
@@ -105,12 +109,12 @@ section ul li{
   display: flex;
 }
 
-.aboutBg{
+/* .aboutBg{
   background-image: url("../public/images/about-img.webp");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-}
+} */
 
 /* ====================================================================== */
 
@@ -152,11 +156,7 @@ section ul li{
   background: url("../public/images/section1-offers.webp");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: top;
-}
-
-.offersHeader div{
-  text-shadow: 1px 1px 2px black;
+  background-position: center;
 }
 
 .rules{
@@ -165,6 +165,12 @@ section ul li{
   background-repeat: no-repeat;
   background-position: top;
 }
+
+#calendly-embed > *, #calendly-embed > **{
+  overflow-y: hidden !important;
+  margin: 0!important;
+}
+
 
 @keyframes appear {
   from {
@@ -182,7 +188,6 @@ section ul li{
   animation-timeline: view();
   animation-range: entry 0% cover 40%;
 }
-
 
 
 @media (max-width: 1023.98px){

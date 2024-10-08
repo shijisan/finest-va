@@ -29,31 +29,35 @@ export default function Home() {
         </h2>
       </header>
 
-      <section className="container flex items-center justify-center h-screen px-0 pt-3 lg:px-32 lg:pt-32">
+      <section className="container flex items-center justify-center h-screen px-0 gradient-wave ">
         <div className="flex flex-col w-full h-auto aboutBg rounded-t-3xl">
-          <div className="flex flex-col items-center justify-center h-full px-5 py-5 text-center lg:px-20 lg:h-1/2 aboutText rounded-t-3xl">
-            <h3 className="text-2xl font-semibold lg:text-3xl">About Us</h3>
+          <div className="flex flex-col items-center justify-center h-full px-5 py-5 text-center lg:px-20 aboutText ">
+            <h3 className="text-2xl font-semibold grayscale lg:text-4xl">About Us</h3>
             <br />
-            <p className="font-sans text-base">
-            Finest VA Marketing Agency is a sister company of The VA Bar, an esteemed academy for virtual assistants. We provide tailored marketing solutions for small businesses and entrepreneurs, specializing in creating effective strategies, managing social media, and enhancing customer engagement. Our focus spans various sectors, including e-commerce, consulting, real estate, and health and wellness. Partner with us to elevate your brand and achieve your business goals with the expertise cultivated from The VA Bar.
+            <p className="text-sm md:w-3/5 lg:text-lg inter">
+              Finest VA Marketing Agency is a sister company of The VA Bar, an esteemed academy for virtual assistants.<br /><br />
+              We provide tailored marketing solutions for small businesses and entrepreneurs, specializing in creating effective strategies, managing social media, and enhancing customer engagement.<br />
+              Our focus spans various sectors, including e-commerce, consulting, real estate, and health and wellness.<br /><br />
+              Partner with us to elevate your brand and achieve your business goals with the expertise cultivated from The VA Bar.
             </p>
+
             <br />
-            <a className="secondary-btn" href="#">Learn More</a>
-          </div>
-          <div className="flex items-center h-full px-5 py-5 text-center justify-evenly lg:px-20 lg:h-1/2 aboutImg rounded-t-3xl">
-            <img src="./images/va_bar.png" className="h-52" alt="The VA Bar Logo" />
-            <img src="./images/logo.webp" className="p-3 bg-teal-100 border-4 border-teal-700 rounded-full h-28" alt="Finest VA logo" />
+            <div className="flex items-center justify-evenly">
+            <img src="./images/va_bar.png" className="h-12 aspect-square" alt="The VA Bar Logo" />
+            <a className="mx-5 secondary-btn h-fit" href="#">Learn More</a>
+            <img src="./images/logo.webp" className="h-12 p-1 bg-teal-100 border-2 border-teal-700 rounded-full aspect-square" alt="Finest VA logo" />
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="container flex flex-col items-center content-center justify-center fadeElement">
-        <div className="flex-col-reverse min-h-screen lg:flex-row halfSect lg:justify-center justify-evenly">
-          <div className="flex-col justify-center w-full px-5 md:px-20 left lg:w-50">
-            <h3 className="text-3xl font-semibold lg:text-4xl">Social Media Manager</h3>
+      <section className="container flex flex-col items-center content-center justify-center">
+        <div className="flex-col min-h-screen lg:flex-row halfSect lg:justify-center justify-evenly">
+          <div className="flex-col justify-center w-full px-5 my-8 md:px-20 left lg:w-50 fadeElement lg:my-0">
+            <h3 className="text-2xl font-semibold lg:text-3xl">Social Media Manager</h3>
             <br />
             <p className="font-sans text-lg">
-              Social media management involves overseeing our online presence across various platforms. We will provide assistance in developing content strategies, scheduling posts, engaging with our audience, and analyzing performance metrics. Our goal is to build a strong brand identity, foster community engagement, and drive traffic to our website, all while adapting to the ever-changing landscape of social media trends.
+            Social media management involves overseeing our online presence across various platforms, including content strategy development, post scheduling, audience engagement, and performance analysis. Our goal is to build a strong brand identity and drive traffic to our website while adapting to the ever-changing social media landscape.
             </p>
             <br />
             <ul className="space-y-3">
@@ -71,10 +75,10 @@ export default function Home() {
               </li>
             </ul>
           </div>
-          <div className="items-center justify-center w-full right lg:w-50">
-            <div className="items-center justify-center w-1/2 my-16 lg:my-0 h-3/5 bg-gradient bg-opacity-60 rounded-3xl">
+          <div className="items-center justify-center w-full h-screen right lg:w-50 lg:h-auto fadeElement">
+            <div className="items-center justify-center my-8 lg:w-1/2 h-96 lg:my-0 bg-gradient bg-opacity-60 rounded-3xl">
               <Image 
-                className="w-full transition-transform duration-300 md:w-1/3 lg:w-full hover:scale-110" 
+                className="w-full transition-transform duration-300 lg:h-auto lg:w-full hover:scale-110" 
                 src="/images/SMM-sect1.webp" 
                 alt="SMM" 
                 loading="lazy" 
@@ -86,9 +90,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="container flex flex-col items-center content-center justify-center fadeElement">
-        <div className="flex-col-reverse min-h-screen lg:flex-row-reverse halfSect lg:justify-center justify-evenly">
-          <div className="flex-col justify-center w-full px-5 md:px-20 lg:w-50 left">
+      <section className="container flex flex-col items-center content-center justify-center">
+        <div className="flex-col min-h-screen lg:flex-row-reverse halfSect lg:justify-center justify-evenly">
+          <div className="flex-col justify-center w-full px-5 md:px-20 lg:w-50 left fadeElement">
             <h3 className="text-3xl font-semibold lg:text-4xl">Email Marketing</h3>
             <br />
             <p className="font-sans text-lg">
@@ -110,7 +114,7 @@ export default function Home() {
               </li>
             </ul>
           </div>
-          <div className="items-center justify-center w-full lg:w-50 right">
+          <div className="items-center justify-center w-full lg:w-50 right fadeElement">
             <div className="items-center justify-center w-1/2 my-16 lg:my-0 h-3/5 bg-gradient-rev bg-opacity-60 rounded-3xl">
               <Image 
                 className="w-full transition-transform duration-300 md:w-1/3 lg:w-full hover:scale-110" 
@@ -126,7 +130,7 @@ export default function Home() {
       </section>
 
       <section className="container flex flex-col items-center content-center justify-center fadeElement">
-        <div className="flex-col-reverse min-h-screen lg:flex-row halfSect lg:justify-center justify-evenly">
+        <div className="flex-col min-h-screen lg:flex-row halfSect lg:justify-center justify-evenly">
           <div className="flex-col justify-center w-full px-5 md:px-20 left lg:w-50">
             <h3 className="text-3xl font-semibold lg:text-4xl">Lead Generation</h3>
             <br />
@@ -165,7 +169,7 @@ export default function Home() {
       </section>
 
       <section className="container flex flex-col items-center content-center justify-center fadeElement">
-        <div className="flex-col-reverse min-h-screen lg:flex-row-reverse halfSect lg:justify-center justify-evenly">
+        <div className="flex-col min-h-screen lg:flex-row-reverse halfSect lg:justify-center justify-evenly">
           <div className="flex-col justify-center w-full px-5 md:px-20 lg:w-50 left">
             <h3 className="text-3xl font-semibold lg:text-4xl">Admin Task</h3>
             <br />

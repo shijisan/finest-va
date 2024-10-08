@@ -11,22 +11,22 @@ export default function Offers(){
         <>
             <Nav />
             
-            <section className="container flex flex-col h-screen offersHeader lg:flex-row">
-                <div className="flex flex-col justify-center w-full h-full mt-20 lg:w-1/2 lg:mt-0 lg:justify-end lg:pb-20 text-lime-400 left lg:px-20">
-                    <div className="border-lime-500 px-7 rounded-xl">
+            <section className="container flex flex-col items-center justify-center h-screen offersHeader lg:flex-row lg:items-start lg:justify-normal">
+                <div className="flex flex-col justify-center w-full px-5 mt-20 text-white lg:h-full h-4/5 lg:bg-opacity-50 lg:bg-lime-400 lg:w-1/2 lg:mt-0 lg:justify-end lg:pb-20 left lg:px-20">
+                    <div className="px-2 py-5 text-center bg-opacity-50 shadow-sm lg:shadow-none shadow-black lg:py-0 rounded-xl lg:bg-transparent bg-lime-400 lg:text-start">
                         <h1 className="text-4xl font-medium">Offers Overview</h1> 
-                        <hr className="my-3 border-lime-400" />
+                        <hr className="my-3 border-lime-800" />
                         <p className="font-sans">Explore the range of services available for your business needs with our Virtual Assistants. Take advantage of our trial offer at $30 for 15 days to assess the compatibility of our VAs with your requirements.</p>
                     </div>
                 </div>
-                <div className="flex flex-col w-full h-full mt-5 lg:ps-0 ps-7 justify-top lg:items-end lg:w-1/2 lg:justify-end lg:pb-20 text-lime-400 left lg:px-20 right lg:mt-0">
-                    <a className="p-3 transition-opacity duration-300 bg-opacity-0 border-2 rounded-full hover:bg-opacity-50 border-lime-400 w-fit bg-lime-400" href="/contact">Initiate Free Trial Now!</a>
+                <div className="flex flex-col items-center w-full mt-5 text-white lg:h-full h-1/5 lg:items-end lg:justify-end lg:w-1/2 lg:pb-20 left lg:px-20 right lg:mt-0">
+                    <a className="p-3 transition-opacity duration-300 bg-opacity-50 rounded-full shadow-sm shadow-black hover:bg-opacity-100 bg-lime-400 w-fit" href="/contact">Initiate Free Trial Now!</a>
                 </div>
             </section>
 
             <IndividualPlans />
 
-            <hr className="w-5/6 border-teal-800" />
+            <hr className="w-full border-teal-800 lg:w-5/6" />
 
             <section className="container flex flex-col items-center justify-center mt-10 PKPlan lg:mt-0">
 

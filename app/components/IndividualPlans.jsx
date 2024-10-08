@@ -18,7 +18,7 @@ const IndividualPlans = () => {
                 {/* Social Media Management Card */}
                 <div 
                     onClick={() => handleCardClick(0)} 
-                    className={`flex flex-col lg:flex-grow-0 flex-grow lg:w-1/4 p-5 bg-teal-500 card rounded-xl cursor-pointer transition-all duration-300 ${expandedCard === 0 ? 'w-full h-60' : 'h-fit'}`}
+                    className={`flex flex-col lg:flex-grow-0 flex-grow w-1/2 lg:w-1/4 p-5 bg-teal-500 card rounded-xl cursor-pointer transition-all duration-300 ${expandedCard === 0 ? 'w-full h-60' : 'h-fit'}`}
                 >
                     <div className="flex justify-between line1">
                         <h3>Social Media Management (SMM)</h3>
@@ -38,7 +38,7 @@ const IndividualPlans = () => {
                 {/* Administrative Assistance Card */}
                 <div 
                     onClick={() => handleCardClick(1)} 
-                    className={`flex flex-col lg:flex-grow-0 flex-grow lg:w-1/4 p-5 bg-teal-500 card rounded-xl cursor-pointer transition-all duration-300 ${expandedCard === 1 ? 'w-full h-60' : 'h-fit'}`}
+                    className={`flex flex-col lg:flex-grow-0 flex-grow w-1/2 lg:w-1/4 p-5 bg-teal-500 card rounded-xl cursor-pointer transition-all duration-300 ${expandedCard === 1 ? 'w-full h-60' : 'h-fit'}`}
                 >
                     <div className="flex justify-between line1">
                         <h3>Administrative Assistance</h3>
@@ -58,7 +58,7 @@ const IndividualPlans = () => {
                 {/* Lead Generation Specialist Card */}
                 <div 
                     onClick={() => handleCardClick(2)} 
-                    className={`flex flex-col lg:flex-grow-0 flex-grow lg:w-1/4 p-5 bg-teal-500 card rounded-xl cursor-pointer transition-all duration-300 ${expandedCard === 2 ? 'w-full h-60' : 'h-fit'}`}
+                    className={`flex flex-col lg:flex-grow-0 flex-grow w-1/2 lg:w-1/4 p-5 bg-teal-500 card rounded-xl cursor-pointer transition-all duration-300 ${expandedCard === 2 ? 'w-full h-60' : 'h-fit'}`}
                 >
                     <div className="flex justify-between line1">
                         <h3>Lead Generation Specialist</h3>
@@ -78,7 +78,7 @@ const IndividualPlans = () => {
                 {/* Real Estate Virtual Assistant (VA) Card */}
                 <div 
                     onClick={() => handleCardClick(3)} 
-                    className={`flex flex-col lg:flex-grow-0 flex-grow lg:w-1/4 p-5 bg-teal-500 card rounded-xl cursor-pointer transition-all duration-300 ${expandedCard === 3 ? 'w-full h-60' : 'h-fit'}`}
+                    className={`flex flex-col lg:flex-grow-0 flex-grow w-1/2 lg:w-1/4 p-5 bg-teal-500 card rounded-xl cursor-pointer transition-all duration-300 ${expandedCard === 3 ? 'w-full h-60' : 'h-fit'}`}
                 >
                     <div className="flex justify-between line1">
                         <h3>Real Estate Virtual Assistant (VA)</h3>
@@ -98,7 +98,7 @@ const IndividualPlans = () => {
                 {/* Appointment Setter Card */}
                 <div 
                     onClick={() => handleCardClick(4)} 
-                    className={`flex flex-col lg:flex-grow-0 flex-grow lg:w-1/4 p-5 bg-teal-500 card rounded-xl cursor-pointer transition-all duration-300 ${expandedCard === 4 ? 'w-full h-60' : 'h-fit'}`}
+                    className={`flex flex-col lg:flex-grow-0 flex-grow w-1/2 lg:w-1/4 p-5 bg-teal-500 card rounded-xl cursor-pointer transition-all duration-300 ${expandedCard === 4 ? 'w-full h-60' : 'h-fit'}`}
                 >
                     <div className="flex justify-between line1">
                         <h3>Appointment Setter (Caller)</h3>
@@ -118,7 +118,7 @@ const IndividualPlans = () => {
                 {/* Graphic Designer Card */}
                 <div 
                     onClick={() => handleCardClick(5)} 
-                    className={`flex flex-col lg:flex-grow-0 flex-grow lg:w-1/4 p-5 bg-teal-500 card rounded-xl cursor-pointer transition-all duration-300 ${expandedCard === 5 ? 'w-full h-60' : 'h-fit'}`}
+                    className={`flex flex-col lg:flex-grow-0 flex-grow w-1/2 lg:w-1/4 p-5 bg-teal-500 card rounded-xl cursor-pointer transition-all duration-300 ${expandedCard === 5 ? 'w-full h-60' : 'h-fit'}`}
                 >
                     <div className="flex justify-between line1">
                         <h3>Graphic Designer</h3>
@@ -138,7 +138,7 @@ const IndividualPlans = () => {
                 {/* Website Developer Card */}
                 <div 
                     onClick={() => handleCardClick(6)} 
-                    className={`flex flex-col lg:flex-grow-0 flex-grow lg:w-1/4 p-5 bg-teal-500 card rounded-xl cursor-pointer transition-all duration-300 ${expandedCard === 6 ? 'w-full h-60' : 'h-fit'}`}
+                    className={`flex flex-col lg:flex-grow-0 flex-grow w-1/2 lg:w-1/4 p-5 bg-teal-500 card rounded-xl cursor-pointer transition-all duration-300 ${expandedCard === 6 ? 'w-full h-60' : 'h-fit'}`}
                 >
                     <div className="flex justify-between line1">
                         <h3>Website Developer</h3>
